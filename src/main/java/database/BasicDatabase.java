@@ -37,6 +37,10 @@ public class BasicDatabase {
         return array;
     }
 
+    public void close() throws SQLException {
+        connection.close();
+    }
+
     public String status() throws SQLException {
         return connection.isValid(settings.databaseTimeout()) ? "OK" : "FAIL";
     }
