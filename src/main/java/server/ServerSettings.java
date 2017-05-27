@@ -1,9 +1,11 @@
-package Utils.Properties;
+package server;
 
-public class Settings implements ServerSettings {
+import utils.PropertiesReader;
+
+public class ServerSettings {
     private PropertiesReader propertiesReader;
 
-    public Settings(PropertiesReader propertiesReader) {
+    public ServerSettings(PropertiesReader propertiesReader) {
         this.propertiesReader = propertiesReader;
     }
 

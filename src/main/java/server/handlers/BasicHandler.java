@@ -1,13 +1,13 @@
-package Server.handlers;
+package server.handlers;
 
-import Server.servlets.MainServlet;
-import Server.servlets.ReadyServlet;
-import Server.servlets.StatusServlet;
+import server.servlets.MainServlet;
+import server.servlets.ReadyServlet;
+import server.servlets.StatusServlet;
 
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
-import static Server.wiring.Endpoints.*;
+import static server.wiring.Endpoints.*;
 
 public class BasicHandler {
 

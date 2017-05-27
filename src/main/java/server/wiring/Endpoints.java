@@ -1,4 +1,4 @@
-package Server.wiring;
+package server.wiring;
 
 public class Endpoints {
     public static final String DEFAULT_ENDPOINT = "";

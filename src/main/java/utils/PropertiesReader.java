@@ -1,4 +1,4 @@
-package Utils.Properties;
+package utils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,7 +18,7 @@ public class PropertiesReader {
         loadProperties();
     }
 
-    String readProperty(String key) {
+    public String readProperty(String key) {
         return properties.getProperty(key);
     }
 
