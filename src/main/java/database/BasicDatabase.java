@@ -1,13 +1,17 @@
 package database;
 
+import database.sql.Column;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import utils.EnvironmentVariableReader;
 import utils.PropertiesReader;
 
-import java.sql.*;
-
-import static database.sql.Query.queryAllFromTable;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BasicDatabase {
 
@@ -23,9 +27,12 @@ public class BasicDatabase {
     }
 
     public JSONArray runQuery() throws SQLException {
-        Statement statement = connection.createStatement(); //Default ResultSet => TYPE_FORWARD_ONLY (Read More)
+        database.sql.Statement a = new database.sql.Statement(connection);
+        List<Column> cols = new ArrayList<>();
+        cols.add(new Column("*"));
+        a.select(cols).from("country");
 
-        ResultSet result = statement.executeQuery(queryAllFromTable("country"));
+        ResultSet result = a.execute();
         JSONArray array = new JSONArray();
         while (result.next()) {
             JSONObject obj = new JSONObject();
