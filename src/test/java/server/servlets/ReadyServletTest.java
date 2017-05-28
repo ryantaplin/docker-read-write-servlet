@@ -1,5 +1,9 @@
 package server.servlets;
 
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
 import org.eclipse.jetty.http.HttpStatus;
 import org.junit.After;
 import org.junit.Before;
@@ -10,8 +14,7 @@ import server.handlers.BasicHandlerBuilder;
 import utils.EnvironmentVariableReader;
 import utils.PropertiesReader;
 
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.io.IOException;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -37,10 +40,12 @@ public class ReadyServletTest {
 
     @Test
     public void readyServletReturnsOKWhenHappy() throws Exception {
-        HttpURLConnection http = (HttpURLConnection)new URL("http://localhost:8080/ready").openConnection();
+        CloseableHttpResponse response = getRequestTo("http://localhost:8080/ready");
+        int responseCode = response.getStatusLine().getStatusCode();
+        String responseBody = EntityUtils.toString(response.getEntity());
 
-        assertThat("Response Code", http.getResponseCode(), is(HttpStatus.OK_200));
-        assertThat("Content Type", http.getResponseMessage(), is("OK"));
+        assertThat("Response Code", responseCode, is(HttpStatus.OK_200));
+        assertThat("Content Type", responseBody, is("OK"));
     }
 
 //    @Test
@@ -51,4 +56,9 @@ public class ReadyServletTest {
 //        assertThat("Response Code", http.getResponseCode(), is(HttpStatus.INTERNAL_SERVER_ERROR_500));
 //        assertThat("Content Type", http.getResponseMessage(), is("FAIL"));
 //    }
+
+    public CloseableHttpResponse getRequestTo(String uri) throws IOException {
+        HttpGet lukeRequest = new HttpGet(uri);
+        return HttpClientBuilder.create().build().execute(lukeRequest);
+    }
 }
