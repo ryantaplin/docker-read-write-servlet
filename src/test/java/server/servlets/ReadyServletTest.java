@@ -41,24 +41,29 @@ public class ReadyServletTest {
     @Test
     public void readyServletReturnsOKWhenHappy() throws Exception {
         CloseableHttpResponse response = getRequestTo("http://localhost:8080/ready");
-        int responseCode = response.getStatusLine().getStatusCode();
-        String responseBody = EntityUtils.toString(response.getEntity());
 
-        assertThat("Response Code", responseCode, is(HttpStatus.OK_200));
-        assertThat("Content Type", responseBody, is("OK"));
+        assertThat("Response Code", getResponseCode(response), is(HttpStatus.OK_200));
+        assertThat("Content Type", getResponsBody(response), is("OK"));
     }
 
-//    @Test
-//    public void readyServletReturnFAILWhenSad() throws Exception {
-//        HttpURLConnection http = (HttpURLConnection)new URL("http://localhost:8080/ready").openConnection();
+    @Test
+    public void readyServletReturnFAILWhenSad() throws Exception {
+//        CloseableHttpResponse response = getRequestTo("http://localhost:8080/ready");
 //
-//        throw new UnsupportedOperationException("Not yet implemented failure for ready page.");
-//        assertThat("Response Code", http.getResponseCode(), is(HttpStatus.INTERNAL_SERVER_ERROR_500));
-//        assertThat("Content Type", http.getResponseMessage(), is("FAIL"));
-//    }
+//        assertThat("Response Code", getResponseCode(response), is(HttpStatus.INTERNAL_SERVER_ERROR_500));
+//        assertThat("Content Type", getResponsBody(response), is("FAIL"));
+    }
 
-    public CloseableHttpResponse getRequestTo(String uri) throws IOException {
-        HttpGet lukeRequest = new HttpGet(uri);
-        return HttpClientBuilder.create().build().execute(lukeRequest);
+    private int getResponseCode(CloseableHttpResponse response) {
+        return response.getStatusLine().getStatusCode();
+    }
+
+    private String getResponsBody(CloseableHttpResponse response) throws IOException {
+        return EntityUtils.toString(response.getEntity());
+    }
+
+    private CloseableHttpResponse getRequestTo(String uri) throws IOException {
+        HttpGet request = new HttpGet(uri);
+        return HttpClientBuilder.create().build().execute(request);
     }
 }
