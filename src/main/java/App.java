@@ -2,7 +2,7 @@ import utils.EnvironmentVariableReader;
 import utils.PropertiesReader;
 import server.ServerSettings;
 import server.BasicServer;
-import server.handlers.BasicHandler;
+import server.handlers.BasicHandlerBuilder;
 
 public class App {
 
@@ -13,8 +13,7 @@ public class App {
         ServerSettings settings = new ServerSettings(new PropertiesReader(environment));
 
         BasicServer server = new BasicServer(settings);
-        server.withContext(BasicHandler.servletHandler());
-
+        server.withContext(new BasicHandlerBuilder().withMainServlet().withReadyServlet().withStatusServlet().build());
         server.start();
     }
 }
