@@ -1,4 +1,4 @@
 .idea/
 target/
 
-*.imlgit rm -r --cached .idea/
+*.iml
