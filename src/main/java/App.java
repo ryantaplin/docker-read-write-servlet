@@ -13,7 +13,7 @@ public class App {
         ServerSettings settings = new ServerSettings(new PropertiesReader(environment));
 
         BasicServer server = new BasicServer(settings);
-        server.withContext(new BasicHandlerBuilder().withMainServlet().withReadyServlet().withStatusServlet().build());
+        server.withContext(new BasicHandlerBuilder().withMainServlet().withReadyServlet().withStatusServlet().withAddServlet().build());
         server.start();
     }
 }

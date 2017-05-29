@@ -9,10 +9,6 @@ public class DatabaseSettings {
         this.propertiesReader = propertiesReader;
     }
 
-//    public int databasePort() {
-//        return Integer.parseInt(propertiesReader.readProperty("database.port"));
-//    }
-
     public int databaseTimeout() {
         return Integer.parseInt(propertiesReader.readProperty("database.timeout"));
     }

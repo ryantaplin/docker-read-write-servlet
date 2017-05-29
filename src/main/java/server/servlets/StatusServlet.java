@@ -49,7 +49,7 @@ public class StatusServlet extends HttpServlet {
         obj.put("User", settings.databaseUsername());
 
         try {
-            obj.put("Status", new BasicDatabase().status());
+            obj.put("Status", new BasicDatabase(settings).status());
         } catch (SQLException e) {
             e.printStackTrace();
         }
