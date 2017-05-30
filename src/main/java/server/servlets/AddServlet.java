@@ -18,8 +18,8 @@ public class AddServlet extends HttpServlet {
         String body = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
         System.out.printf("Received request to add body to database: '%s'%n", body);
 
+        PortInOrder order = PortInOrder.unmarshal(body);
         try {
-            PortInOrder order = PortInOrder.unmarshall(body);
             PortInRepository repository = new PortInRepository();
             repository.insert(order);
             repository.getAll().write(response.getWriter());

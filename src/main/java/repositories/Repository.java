@@ -8,8 +8,6 @@ import java.sql.SQLException;
 
 public interface Repository {
 
-    final String TABLE_NAME = "";
-
     JSONArray getAll() throws SQLException;
     JSONArray getById(int id) throws SQLException;
     JSONArray find(String column, String criteria) throws SQLException;
@@ -19,4 +17,5 @@ public interface Repository {
     void insert(PortInOrder order) throws SQLException;
 
     void removeById(int id);
+
 }

@@ -7,7 +7,7 @@ public class BasicServer {
     private final Server server;
 
     public BasicServer(ServerSettings settings) {
-        this.server = new Server(settings.serverPort()); //extract port into settings
+        this.server = new Server(settings.serverPort());
     }
 
     public void withContext(ServletContextHandler servletHandler) {

@@ -15,12 +15,12 @@ public class PortInOrder {
         this.DATE = date;
     }
 
-    public String extractValuesAsString() {
-        return String.format("'%s','%s','%s','%s'", ID, MSISDN, SERVICE, DATE);
-    }
-
-    public static PortInOrder unmarshall(String request) {
+    public static PortInOrder unmarshal(String request) {
         JSONObject json = new JSONObject(request);
         return new PortInOrder(json.getString("ID"), json.getString("MSISDN"), json.getString("SERVICE"), json.getString("DATE"));
+    }
+
+    public boolean isComplete() {
+        return !ID.isEmpty() && !MSISDN.isEmpty() && !SERVICE.isEmpty() && !DATE.isEmpty();
     }
 }

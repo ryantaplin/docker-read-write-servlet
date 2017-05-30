@@ -11,45 +11,46 @@ import utils.PropertiesReader;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class PortInRepository implements Repository {
 
-    private final String TABLE_NAME = "PortIn";
+    private String TABLE_NAME = "PortIn";
 
     private BasicDatabase database;
 
     public PortInRepository() throws SQLException {
-        String environment = EnvironmentVariableReader.getSystemEnvironment();
+        String environment = EnvironmentVariableReader.getEnvironment();
         DatabaseSettings settings = new DatabaseSettings(new PropertiesReader(environment));
         this.database = new BasicDatabase(settings);
     }
 
     @Override
     public JSONArray getAll() throws SQLException {
-        return convertResultsToJson(getStatement().executeQuery(
+        return convertResultsToJson(database.createStatement().executeQuery(
                 String.format("SELECT * FROM %s", TABLE_NAME)));
     }
 
     @Override
     public JSONArray getById(int id) throws SQLException {
-       return convertResultsToJson(getStatement().executeQuery(
+       return convertResultsToJson(database.createStatement().executeQuery(
                 String.format("SELECT * FROM %s WHERE %s=%s", TABLE_NAME, PortInColumn.ID, id)));
     }
 
     @Override
     public JSONArray find(String column, String criteria) throws SQLException {
-        if (!columnExists(column))
+        if (!PortInColumn.exists(column))
             throw new NullPointerException(String.format("Column '%s' does not exist in table '%s'", column, TABLE_NAME));
 
-        return convertResultsToJson(getStatement().executeQuery(
+        return convertResultsToJson(database.createStatement().executeQuery(
                 String.format("SELECT * FROM %s WHERE %s=%s", TABLE_NAME, column, criteria)));
     }
 
     @Override
     public void insert(PortInOrder order) throws SQLException {
-        if (!order.getClass().equals(PortInOrder.class)) throw new IllegalArgumentException("");
-            getStatement().executeUpdate(String.format("INSERT INTO %s VALUES (%s)", TABLE_NAME , order.extractValuesAsString()));
+        if (order.isComplete()) throw new IllegalArgumentException("");
+        database.createStatement().executeUpdate(
+                String.format("INSERT INTO %s VALUES (%s,%s,%s,%s)", TABLE_NAME,
+                        order.ID, order.MSISDN, order.SERVICE, order.DATE));
     }
 
     @Override
@@ -70,16 +71,4 @@ public class PortInRepository implements Repository {
         }
         return array;
     }
-
-    private Statement getStatement() throws SQLException {
-        return database.connection.createStatement(); //Default ResultSet => TYPE_FORWARD_ONLY (Read More)
-    }
-
-    private Boolean columnExists(String column) {
-        for(PortInColumn c : PortInColumn.values()) {
-            if (column.equals(c.toString())) return true;
-        }
-        return false;
-    }
-
 }
