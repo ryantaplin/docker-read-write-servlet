@@ -1,6 +1,9 @@
+import org.eclipse.jetty.servlet.ServletContextHandler;
 import server.BasicServer;
-import server.handlers.BasicHandlerBuilder;
+import server.handlers.ReadHandlerBuilder;
+import server.handlers.WriteHandlerBuilder;
 
+import static utils.EnvironmentVariableReader.getAppRole;
 import static utils.EnvironmentVariableReader.getEnvironment;
 import static utils.Settings.getServerSettings;
 
@@ -8,13 +11,22 @@ public class App {
 
     public static void main(String[] args) throws Exception {
         BasicServer server = new BasicServer(getServerSettings());
-        server.withContext(
-                new BasicHandlerBuilder()
-                .withMainServlet()
-                .withReadyServlet()
-                .withStatusServlet()
-                .withAddServlet().build());
+        server.withContext(getHandlerForApp());
         server.start();
-        System.out.println(String.format("Server started in '%s' environment.", getEnvironment()));
+
+        System.out.println(String.format("Server has successfully loaded under '%s' environment.", getEnvironment()));
+    }
+
+    private static ServletContextHandler getHandlerForApp() {
+        switch (getAppRole()) {
+            case "WRITE":
+                System.out.println("Application has been assigned WRITE-role.");
+                return new WriteHandlerBuilder().withAddServlet().build();
+            case "READ":
+                System.out.println("Application has been assigned READ-role.");
+                return new ReadHandlerBuilder().withReadServlet().build();
+            default:
+                throw new IllegalStateException("No role for application is defined.");
+        }
     }
 }

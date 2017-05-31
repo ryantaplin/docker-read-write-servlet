@@ -1,9 +1,6 @@
 package database;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class BasicDatabase {
 
@@ -20,7 +17,15 @@ public class BasicDatabase {
         System.out.println(String.format("Accessing database '%s' with '%s'.", settings.databaseURL(), settings.databaseUsername()));
     }
 
-    public Statement createStatement() throws SQLException {
+    public ResultSet query(String sql) throws SQLException {
+        return createStatement().executeQuery(sql);
+    }
+
+    public void update(String sql) throws SQLException {
+        createStatement().executeUpdate(sql);
+    }
+
+    private Statement createStatement() throws SQLException {
         return this.connection.createStatement(); //Default ResultSet => TYPE_FORWARD_ONLY (Read More)
     }
 

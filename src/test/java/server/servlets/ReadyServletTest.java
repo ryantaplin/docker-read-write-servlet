@@ -9,15 +9,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import server.BasicServer;
-import server.ServerSettings;
-import server.handlers.BasicHandlerBuilder;
-import utils.EnvironmentVariableReader;
-import utils.PropertiesReader;
+import server.handlers.HandlerBuilder;
 
 import java.io.IOException;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static utils.Settings.getServerSettings;
 
 public class ReadyServletTest {
 
@@ -25,11 +23,8 @@ public class ReadyServletTest {
 
     @Before
     public void setUp() throws Exception {
-        String environment = EnvironmentVariableReader.getEnvironment();
-        ServerSettings settings = new ServerSettings(new PropertiesReader(environment));
-
-        server = new BasicServer(settings);
-        server.withContext(new BasicHandlerBuilder().withReadyServlet().build());
+        server = new BasicServer(getServerSettings());
+        server.withContext(new HandlerBuilder().build());
         server.start();
     }
 

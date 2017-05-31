@@ -5,13 +5,14 @@ import database.DatabaseSettings;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import utils.EnvironmentVariableReader;
-import utils.PropertiesReader;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
+import static utils.Settings.getDatabaseSettings;
 
 public class StatusServlet extends HttpServlet {
 
@@ -47,9 +48,7 @@ public class StatusServlet extends HttpServlet {
 
     private JSONObject getDatabaseProbe()  {
         JSONObject obj = new JSONObject();
-
-        String environment = EnvironmentVariableReader.getEnvironment();
-        DatabaseSettings settings = new DatabaseSettings(new PropertiesReader(environment));
+        DatabaseSettings settings = getDatabaseSettings();
 
         obj.put("Name", "MySQL Database");
         obj.put("URL", settings.databaseURL());
@@ -57,6 +56,5 @@ public class StatusServlet extends HttpServlet {
         obj.put("Status", BasicDatabaseBuilder.build().status());
 
         return obj;
-
     }
 }

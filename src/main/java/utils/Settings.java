@@ -10,7 +10,7 @@ public class Settings {
         return new ServerSettings(new PropertiesReader(environment));
     }
 
-    public DatabaseSettings getDatabaseSettings() {
+    public static DatabaseSettings getDatabaseSettings() {
         String environment = EnvironmentVariableReader.getEnvironment();
         return new DatabaseSettings(new PropertiesReader(environment));
     }
