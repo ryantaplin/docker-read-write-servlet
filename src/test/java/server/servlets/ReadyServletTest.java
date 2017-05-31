@@ -25,7 +25,7 @@ public class ReadyServletTest {
 
     @Before
     public void setUp() throws Exception {
-        String environment = EnvironmentVariableReader.getSystemEnvironment();
+        String environment = EnvironmentVariableReader.getEnvironment();
         ServerSettings settings = new ServerSettings(new PropertiesReader(environment));
 
         server = new BasicServer(settings);

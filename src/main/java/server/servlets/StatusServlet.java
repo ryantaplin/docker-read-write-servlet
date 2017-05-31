@@ -1,10 +1,10 @@
 package server.servlets;
 
-import database.BasicDatabase;
+import database.BasicDatabaseBuilder;
 import database.DatabaseSettings;
 import org.json.JSONArray;
-import utils.EnvironmentVariableReader;
 import org.json.JSONObject;
+import utils.EnvironmentVariableReader;
 import utils.PropertiesReader;
 
 import javax.servlet.ServletException;
@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 
 public class StatusServlet extends HttpServlet {
 
@@ -24,12 +23,20 @@ public class StatusServlet extends HttpServlet {
 
     private JSONObject statusPageAsJSON() {
         JSONObject obj = new JSONObject();
+        JSONArray probes = getProbes();
 
-        obj.put("Status", "OK"); //hard coded; needs implementing
-        obj.put("probes", getProbes());
-        obj.put("Environment", EnvironmentVariableReader.getSystemEnvironment());
+        obj.put("Status", getOverallStatus(probes)); //hard coded; needs implementing
+        obj.put("probes", probes);
+        obj.put("Environment", EnvironmentVariableReader.getEnvironment());
 
         return obj;
+    }
+
+    private String getOverallStatus(JSONArray probes) {
+        for (int i = 0; i < probes.length(); i++) {
+            if (probes.getJSONObject(i).toString().equals("FAIL")) return "FAIL";
+        }
+        return "OK";
     }
 
     private JSONArray getProbes() {
@@ -41,22 +48,15 @@ public class StatusServlet extends HttpServlet {
     private JSONObject getDatabaseProbe()  {
         JSONObject obj = new JSONObject();
 
-        String environment = EnvironmentVariableReader.getSystemEnvironment();
+        String environment = EnvironmentVariableReader.getEnvironment();
         DatabaseSettings settings = new DatabaseSettings(new PropertiesReader(environment));
 
-        obj.put("Name", "World Database");
+        obj.put("Name", "MySQL Database");
         obj.put("URL", settings.databaseURL());
         obj.put("User", settings.databaseUsername());
-
-        try {
-            obj.put("Status", new BasicDatabase().status());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        obj.put("Status", BasicDatabaseBuilder.build().status());
 
         return obj;
 
     }
-
-
 }

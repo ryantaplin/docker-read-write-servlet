@@ -1,19 +1,20 @@
-import utils.EnvironmentVariableReader;
-import utils.PropertiesReader;
-import server.ServerSettings;
 import server.BasicServer;
 import server.handlers.BasicHandlerBuilder;
+
+import static utils.EnvironmentVariableReader.getEnvironment;
+import static utils.Settings.getServerSettings;
 
 public class App {
 
     public static void main(String[] args) throws Exception {
-        String environment = EnvironmentVariableReader.getSystemEnvironment();
-        System.out.println(String.format("Starting server in '%s' environment.", environment));
-
-        ServerSettings settings = new ServerSettings(new PropertiesReader(environment));
-
-        BasicServer server = new BasicServer(settings);
-        server.withContext(new BasicHandlerBuilder().withMainServlet().withReadyServlet().withStatusServlet().build());
+        BasicServer server = new BasicServer(getServerSettings());
+        server.withContext(
+                new BasicHandlerBuilder()
+                .withMainServlet()
+                .withReadyServlet()
+                .withStatusServlet()
+                .withAddServlet().build());
         server.start();
+        System.out.println(String.format("Server started in '%s' environment.", getEnvironment()));
     }
 }

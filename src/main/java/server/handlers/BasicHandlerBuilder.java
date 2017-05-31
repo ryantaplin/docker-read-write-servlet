@@ -1,5 +1,6 @@
 package server.handlers;
 
+import server.servlets.AddServlet;
 import server.servlets.MainServlet;
 import server.servlets.ReadyServlet;
 import server.servlets.StatusServlet;
@@ -29,6 +30,11 @@ public class BasicHandlerBuilder {
 
     public BasicHandlerBuilder withStatusServlet() {
         handler.addServlet(new ServletHolder(new StatusServlet()), STATUS_ENDPOINT);
+        return this;
+    }
+
+    public BasicHandlerBuilder withAddServlet() {
+        handler.addServlet(new ServletHolder(new AddServlet()), ADD_ENDPOINT);
         return this;
     }
 
