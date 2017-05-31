@@ -1,5 +1,7 @@
 package database;
 
+import settings.DatabaseSettings;
+
 import java.sql.*;
 
 public class BasicDatabase {

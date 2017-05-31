@@ -1,17 +1,17 @@
 package utils;
 
-import database.DatabaseSettings;
-import server.ServerSettings;
+import settings.DatabaseSettings;
+import settings.ServerSettings;
+
+import static utils.EnvironmentVariableReader.*;
 
 public class Settings {
 
     public static ServerSettings getServerSettings() {
-        String environment = EnvironmentVariableReader.getEnvironment();
-        return new ServerSettings(new PropertiesReader(environment));
+        return new ServerSettings(new PropertiesReader(getEnvironment()));
     }
 
     public static DatabaseSettings getDatabaseSettings() {
-        String environment = EnvironmentVariableReader.getEnvironment();
-        return new DatabaseSettings(new PropertiesReader(environment));
+        return new DatabaseSettings(new PropertiesReader(getEnvironment()));
     }
 }

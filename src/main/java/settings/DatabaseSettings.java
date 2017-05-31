@@ -1,12 +1,11 @@
-package database;
+package settings;
 
 import utils.PropertiesReader;
 
-public class DatabaseSettings {
-    private PropertiesReader propertiesReader;
+public class DatabaseSettings extends Settings {
 
     public DatabaseSettings(PropertiesReader propertiesReader) {
-        this.propertiesReader = propertiesReader;
+        super(propertiesReader);
     }
 
     public int databaseTimeout() {

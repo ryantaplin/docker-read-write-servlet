@@ -1,7 +1,7 @@
 package server.servlets;
 
 import database.BasicDatabaseBuilder;
-import database.DatabaseSettings;
+import settings.DatabaseSettings;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import utils.EnvironmentVariableReader;

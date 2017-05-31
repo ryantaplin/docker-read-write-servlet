@@ -2,6 +2,7 @@ package server;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
+import settings.ServerSettings;
 
 public class BasicServer {
     private final Server server;

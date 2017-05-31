@@ -1,12 +1,11 @@
-package server;
+package settings;
 
 import utils.PropertiesReader;
 
-public class ServerSettings {
-    private PropertiesReader propertiesReader;
+public class ServerSettings extends Settings {
 
     public ServerSettings(PropertiesReader propertiesReader) {
-        this.propertiesReader = propertiesReader;
+        super(propertiesReader);
     }
 
     public int serverPort() {
