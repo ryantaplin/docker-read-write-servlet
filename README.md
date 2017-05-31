@@ -11,6 +11,8 @@ The Docker image that I plan to be using can be found [here](https://hub.docker.
 
 Along side this application I plan to be running a docker-read-servlet. This will be reading the persisted data from the same instance of MySQL. At this point in time I foresee the database being a single point of failure but ultimately I would also like to make MySQL scalable. You can read more about the [Docker-Read-Servlet here](https://github.com/RyanTaplin1705/docker-read-servlet/tree/master)
 
+![Diagram of Applications](https://image.ibb.co/ebSXtF/Write_Read_Serv.png)
+
 # TODOs
 - ~~Apply database write mechanism to application.~~
 - Apply database update mechanism to application.
