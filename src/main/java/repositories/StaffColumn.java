@@ -1,13 +1,13 @@
 package repositories;
 
-public enum PortInColumn {
+public enum StaffColumn {
     ID,
-    MSISDN,
-    DATE,
-    SERVICE;
+    TITLE,
+    FIRSTNAME,
+    SURNAME;
 
     public static Boolean exists(String column) {
-        for (PortInColumn c : PortInColumn.values()) {
+        for (StaffColumn c : StaffColumn.values()) {
             if (column.equals(c.toString())) return true;
         }
         return false;

@@ -9,7 +9,7 @@ public class EnvironmentVariableReader {
 
     public static String getAppRole() {
         String role = getVariable("ROLE");
-        return role != null ? "WRITE" : "READ";
+        return role != null ? role : "READ";
     }
 
     private static String getVariable(String variable) {

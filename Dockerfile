@@ -1,15 +1,17 @@
-# Dockerfile
-FROM demo/oracle-java:8
+# dockerfile
+FROM java:8
 
-ENV MAVEN_VERSION 3.3.9
+RUN apt-get update
+RUN apt-get install -y maven
 
-RUN mkdir -p /usr/share/maven \
-  && curl -fsSL http://apache.osuosl.org/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz \
-    | tar -xzC /usr/share/maven --strip-components=1 \
-  && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
+WORKDIR /
 
-ENV MAVEN_HOME /usr/share/maven
+ADD pom.xml /code/pom.xml
+RUN ["mvn", "dependency:resolve"]
+RUN ["mvn", "verify"]
 
-VOLUME /root/.m2
+ADD src /src
+RUN ["mvn", "package"]
 
-CMD ["mvn"]
+EXPOSE 8080
+CMD ["/usr/lib/jvm/java-8-openjdk-amd64/bin/java", "-jar", "target/sparkexample-jar-with-dependencies.jar"]

@@ -1,6 +1,6 @@
 package server.servlets;
 
-import repositories.PortInRepository;
+import repositories.StaffRepository;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,10 +15,11 @@ public class ReadServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
         try {
-            PortInRepository repository = new PortInRepository();
+            StaffRepository repository = new StaffRepository();
             repository.getAll().write(response.getWriter());
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
 }

@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import server.BasicServer;
 import server.handlers.HandlerBuilder;
+import server.handlers.WriteHandlerBuilder;
 
 import java.io.IOException;
 
@@ -24,7 +25,7 @@ public class ReadyServletTest {
     @Before
     public void setUp() throws Exception {
         server = new BasicServer(getServerSettings());
-        server.withContext(new HandlerBuilder().build());
+        server.withContext(new WriteHandlerBuilder().build());
         server.start();
     }
 
@@ -39,14 +40,6 @@ public class ReadyServletTest {
 
         assertThat("Response Code", getResponseCode(response), is(HttpStatus.OK_200));
         assertThat("Content Type", getResponsBody(response), is("OK"));
-    }
-
-    @Test
-    public void readyServletReturnFAILWhenSad() throws Exception {
-//        CloseableHttpResponse response = getRequestTo("http://localhost:8080/ready");
-//
-//        assertThat("Response Code", getResponseCode(response), is(HttpStatus.INTERNAL_SERVER_ERROR_500));
-//        assertThat("Content Type", getResponsBody(response), is("FAIL"));
     }
 
     private int getResponseCode(CloseableHttpResponse response) {

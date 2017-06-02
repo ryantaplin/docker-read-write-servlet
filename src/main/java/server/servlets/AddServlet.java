@@ -1,7 +1,7 @@
 package server.servlets;
 
-import model.PortInOrder;
-import repositories.PortInRepository;
+import model.Staff;
+import repositories.StaffRepository;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,9 +18,9 @@ public class AddServlet extends HttpServlet {
         String body = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
         System.out.printf("Received request to add body to database: '%s'%n", body);
 
-        PortInOrder order = PortInOrder.unmarshal(body);
+        Staff order = Staff.unmarshal(body);
         try {
-            PortInRepository repository = new PortInRepository();
+            StaffRepository repository = new StaffRepository();
             repository.insert(order);
             repository.getAll().write(response.getWriter());
         } catch (SQLException e) {

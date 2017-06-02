@@ -1,6 +1,6 @@
 package repositories;
 
-import model.PortInOrder;
+import model.Staff;
 import org.json.JSONArray;
 
 import java.sql.ResultSet;
@@ -14,7 +14,7 @@ public interface Repository {
 
     JSONArray convertResultsToJson(ResultSet result) throws SQLException;
 
-    void insert(PortInOrder order) throws SQLException;
+    void insert(Staff order) throws SQLException;
 
     void removeById(int id);
 
