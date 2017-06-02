@@ -51,7 +51,7 @@ Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 - Create database schema.
 - Create script to apply database schema if tables don't exist.
 - Think about how to do database versioning. (via script?)
-- Successfully deploy MySQL to docker (requires dualboot of Ubuntu)
+- ~~Successfully deploy MySQL to docker (requires dualboot of Ubuntu)~~
 - Create docker file for application using base JRE image.
 - Deploy docker image successfully and get it successfully interact with MySQL container.
 - Setup Kubernetes and deploy docker containers under Kubernetes.
