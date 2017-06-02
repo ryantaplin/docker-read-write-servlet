@@ -15,21 +15,32 @@ The Docker-Read-Servlet will be able to accept various GET requests. Each reques
 
 # Running the Application (Read & Write)
 
-| Env Var       | Value            |
-| ------------- |:----------------:|
-| ENVIRONMENT   | "docker"         |
-| ROLE          | "READ" / "WRITE" |
+1. Run the '**docker build**' command in the project repository.
+```
+    ryan@dev:~$/docker-write-servlet$ docker build -t myapp ./
+```
+
+2. Run the '**docker run**' command to start your application.
+```
+    docker run --name write-servlet  -e ENIVRONMENT=docker -e ROLE=WRITE -p 8082:8080 -d -it myapp
+    docker run --name read-servlet  -e ENIVRONMENT=docker -e ROLE=READ -p 8082:8080 -d -it myapp
+```
+
+| Env Var       | Value                    |
+| ------------- |:------------------------:|
+| ENVIRONMENT   | localhost / docker / ci  |
+| ROLE          | READ / WRITE             |
 
 # Running MySQL in Docker from [Dockerhub](https://hub.docker.com/_/mysql/)
 
 1. Run the '**docker run**' command to pull mysql image and deploy it locally.
 ```
-docker run --detach --name mysql -e MYSQL_ROOT_PASSWORD=pass -d mysql:tag
+    docker run --detach --name mysql -e MYSQL_ROOT_PASSWORD=pass -d mysql:tag
 ```
 
 2. Run the '**docker exec**' command to go inside the container and run mysql commands.
 ```
-docker exec -it mysql /bin/bash
+    docker exec -it mysql /bin/bash
 ```
 
 3. Run the '**mysql**' command to enter mysql console mode. Here you can apply your schema.

@@ -9,7 +9,7 @@ import java.sql.SQLException;
 public interface Repository {
 
     JSONArray getAll() throws SQLException;
-    JSONArray getById(int id) throws SQLException;
+    JSONArray getBySurname(String surname) throws SQLException;
     JSONArray find(String column, String criteria) throws SQLException;
 
     JSONArray convertResultsToJson(ResultSet result) throws SQLException;

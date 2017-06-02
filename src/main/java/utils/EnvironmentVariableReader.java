@@ -4,7 +4,7 @@ public class EnvironmentVariableReader {
 
     public static String getEnvironment() {
         String environment = getVariable("ENVIRONMENT");
-        return environment != null ? environment : "losthost";
+        return environment != null ? environment : "localhost";
     }
 
     public static String getAppRole() {

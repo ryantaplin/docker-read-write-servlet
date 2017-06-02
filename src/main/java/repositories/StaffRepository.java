@@ -26,8 +26,8 @@ public class StaffRepository implements Repository {
     }
 
     @Override
-    public JSONArray getById(int id) throws SQLException {
-       return convertResultsToJson(database.query(String.format("SELECT * FROM %s WHERE %s=%s", TABLE_NAME, StaffColumn.ID, id)));
+    public JSONArray getBySurname(String surname) throws SQLException {
+       return convertResultsToJson(database.query(String.format("SELECT * FROM %s WHERE %s=%s", TABLE_NAME, StaffColumn.SURNAME, surname)));
     }
 
     @Override
@@ -40,9 +40,10 @@ public class StaffRepository implements Repository {
 
     @Override
     public void insert(Staff order) throws SQLException {
-        if (order.isComplete()) throw new IllegalArgumentException("");
-        database.update(String.format("INSERT INTO %s VALUES (%s,%s,%s)", TABLE_NAME,
-                order.title, order.firstname, order.surname));
+        if (order.isComplete()) throw new IllegalArgumentException("order is incomplete");
+
+        database.update(String.format("INSERT INTO %s (title, firstname, surname) VALUES\n" +
+                "('%s', '%s', '%s');", TABLE_NAME, order.title, order.firstname, order.surname));
     }
 
     @Override
@@ -55,7 +56,6 @@ public class StaffRepository implements Repository {
         JSONArray array = new JSONArray();
         while (result.next()) {
             JSONObject obj = new JSONObject();
-            obj.put("id", result.getInt(StaffColumn.ID.toString()));
             obj.put("title", result.getString(StaffColumn.TITLE.toString()));
             obj.put("First Name", result.getString(StaffColumn.FIRSTNAME.toString()));
             obj.put("firstname", result.getString(StaffColumn.SURNAME.toString()));

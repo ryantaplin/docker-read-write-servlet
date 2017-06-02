@@ -14,6 +14,7 @@ import server.handlers.WriteHandlerBuilder;
 
 import java.io.IOException;
 
+import static org.eclipse.jetty.http.HttpStatus.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static utils.Settings.getServerSettings;
@@ -38,7 +39,7 @@ public class ReadyServletTest {
     public void readyServletReturnsOKWhenHappy() throws Exception {
         CloseableHttpResponse response = getRequestTo("http://localhost:8080/ready");
 
-        assertThat("Response Code", getResponseCode(response), is(HttpStatus.OK_200));
+        assertThat("Response Code", getResponseCode(response), is(OK_200));
         assertThat("Content Type", getResponsBody(response), is("OK"));
     }
 
