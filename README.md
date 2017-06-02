@@ -15,10 +15,10 @@ The Docker-Read-Servlet will be able to accept various GET requests. Each reques
 
 # Running the Application (Read & Write)
 
-| Env Var       | Value                          |
-| ------------- |:------------------------------:|
-| ENVIRONMENT   | "localhost" / "ci" / "docker"  |
-| ROLE          | "READ" / "WRITE"               |
+| Env Var       | Value            |
+| ------------- |:----------------:|
+| ENVIRONMENT   | "docker"         |
+| ROLE          | "READ" / "WRITE" |
 
 # Running MySQL in Docker from [Dockerhub](https://hub.docker.com/_/mysql/)
 
