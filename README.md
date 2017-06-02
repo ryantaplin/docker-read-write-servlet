@@ -17,12 +17,12 @@ The Docker-Read-Servlet will be able to accept various GET requests. Each reques
 
 1. Run the '**docker build**' command in the project repository.
 ```
-    ryan@dev:~$/docker-write-servlet$ docker build -t myapp ./
+    docker build -t myapp ./
 ```
 
 2. Run the '**docker run**' command to start your application.
 ```
-    docker run --name write-servlet  -e ENVIRONMENT=docker -e ROLE=WRITE -p 8082:8080 -d -it myapp
+    docker run --name write-servlet -e ENVIRONMENT=docker -e ROLE=WRITE -p 8082:8080 -d -it myapp
     docker run --name read-servlet  -e ENVIRONMENT=docker -e ROLE=READ -p 8082:8080 -d -it myapp
 ```
 
@@ -35,7 +35,7 @@ The Docker-Read-Servlet will be able to accept various GET requests. Each reques
 
 1. Run the '**docker run**' command to pull mysql image and deploy it locally.
 ```
-    docker run --detach --name mysql -e MYSQL_ROOT_PASSWORD=pass -d mysql:tag
+    docker run --name mysql -e MYSQL_ROOT_PASSWORD=pass -d mysql:tag
 ```
 
 2. Run the '**docker exec**' command to go inside the container and run mysql commands.
@@ -61,21 +61,22 @@ Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
 # TODO - Write Servlet
 - ~~Apply database write mechanism to application.~~
-- Apply database update mechanism to application.
-- Apply some logic to input data (unmarshalling/validation/manipulation)
-- Create database schema.
+- ~~Apply database update mechanism to application~~.
+- ~~Apply some logic to input data (unmarshalling/validation/manipulation)~~
+- ~~Create database schema~~.
 - Create script to apply database schema if tables don't exist.
 - Think about how to do database versioning. (via script?)
 - ~~Successfully deploy MySQL to docker (requires dualboot of Ubuntu)~~
-- Create docker file for application using base JRE image.
-- Deploy docker image successfully and get it successfully interact with MySQL container.
+- ~~Create docker file for application using base JRE image~~.
+- ~~Deploy docker image successfully and get it successfully interact with MySQL container~~.
+- Research: Check if I can reference MySQL container URL by container name in Docker.
 - Setup Kubernetes and deploy docker containers under Kubernetes.
 
 # TODO - Read Servlet
-- Apply database read mechanism to application. (May need to be revisited with more advanced queries).
+- ~~Apply database read mechanism to application.~~ (May need to be revisited with more advanced queries).
 - Apply some logic to data pulled from data (unmarshalling/validation/manipulation)
 - Think about how to do database versioning and how this app will handle it.
-- Create docker file for application using base JRE image.
-- Deploy docker image successfully and get it successfully interact with MySQL container.
+- ~~Create docker file for application using base JRE image.~~
+- ~~Deploy docker image successfully and get it successfully interact with MySQL container.~~
 - Setup Kubernetes and deploy docker containers under Kubernetes.
 
