@@ -17,7 +17,7 @@ The Docker-Read-Servlet will be able to accept various GET requests. Each reques
 
 1. Run the '**docker run**' command to pull mysql image and deploy it locally.
 ```
-docker run --name mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql:tag
+docker run --detach --name mysql -e MYSQL_ROOT_PASSWORD=pass -d mysql:tag
 ```
 
 2. Run the '**docker exec**' command to go inside the container and run mysql commands.
