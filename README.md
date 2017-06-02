@@ -13,7 +13,7 @@ The Docker-Read-Servlet will be able to accept various GET requests. Each reques
 
 ![Diagram of Applications](https://image.ibb.co/ebSXtF/Write_Read_Serv.png)
 
-# Running MySQL in docker from [Dockerhub](https://hub.docker.com/_/mysql/)
+# Running MySQL in Docker from [Dockerhub](https://hub.docker.com/_/mysql/)
 
 1. Run the '**docker run**' command to pull mysql image and deploy it locally.
 ```
@@ -40,9 +40,6 @@ owners.
 
 Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 ```
-
-4. Update your properties files to match appropriately; if your
-
 
 # TODO - Write Servlet
 - ~~Apply database write mechanism to application.~~
