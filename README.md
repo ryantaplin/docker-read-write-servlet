@@ -22,8 +22,8 @@ The Docker-Read-Servlet will be able to accept various GET requests. Each reques
 
 2. Run the '**docker run**' command to start your application.
 ```
-    docker run --name write-servlet  -e ENIVRONMENT=docker -e ROLE=WRITE -p 8082:8080 -d -it myapp
-    docker run --name read-servlet  -e ENIVRONMENT=docker -e ROLE=READ -p 8082:8080 -d -it myapp
+    docker run --name write-servlet  -e ENVIRONMENT=docker -e ROLE=WRITE -p 8082:8080 -d -it myapp
+    docker run --name read-servlet  -e ENVIRONMENT=docker -e ROLE=READ -p 8082:8080 -d -it myapp
 ```
 
 | Env Var       | Value                    |

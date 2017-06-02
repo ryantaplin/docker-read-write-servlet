@@ -19,10 +19,10 @@ public class App {
 
     private static ServletContextHandler getHandlerForApp() {
         switch (getAppRole()) {
-            case "WRITE":
+            case "write":
                 System.out.println("Application has been assigned WRITE-role.");
                 return new WriteHandlerBuilder().withAddServlet().build();
-            case "READ":
+            case "read":
                 System.out.println("Application has been assigned READ-role.");
                 return new ReadHandlerBuilder().withReadServlet().build();
             default:
