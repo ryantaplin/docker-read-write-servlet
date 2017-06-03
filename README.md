@@ -1,4 +1,4 @@
-# Docker-Write Application ![Travis build status](https://travis-ci.org/RyanTaplin1705/docker-write-servlet.svg?branch=master "Build Status")
+# Docker-Read-Write Application ![Travis build status](https://travis-ci.org/RyanTaplin1705/docker-write-servlet.svg?branch=master "Build Status")
 
 As a placement student at Sky I have spent the past few months being exposed to the technology industry and their practices. One area that has interested me is the rise of scalable distrituable container platforms such as Docker.
 
@@ -64,7 +64,7 @@ Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 - ~~Apply database update mechanism to application~~.
 - ~~Apply some logic to input data (unmarshalling/validation/manipulation)~~
 - ~~Create database schema~~.
-- Create script to apply database schema if tables don't exist.
+- ~~Create script to apply database schema if tables don't exist~~.
 - Think about how to do database versioning. (via script?)
 - ~~Successfully deploy MySQL to docker (requires dualboot of Ubuntu)~~
 - ~~Create docker file for application using base JRE image~~.
