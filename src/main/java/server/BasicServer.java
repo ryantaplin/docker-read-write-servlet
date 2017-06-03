@@ -4,6 +4,8 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import settings.ServerSettings;
 
+import java.util.Arrays;
+
 public class BasicServer {
     private final Server server;
 
@@ -15,11 +17,19 @@ public class BasicServer {
         server.setHandler(servletHandler);
     }
 
-    public void start() throws Exception {
-        server.start();
+    public void start() {
+        try {
+            server.start();
+        } catch (Exception e) {
+            System.out.println(String.format("Server could not start: %n%s", Arrays.toString(e.getStackTrace())));
+        }
     }
 
-    public void stop() throws Exception {
-        server.stop();
+    public void stop() {
+        try {
+            server.stop();
+        } catch (Exception e) {
+            System.out.println(String.format("Server could not stop: %n%s%n", Arrays.toString(e.getStackTrace())));
+        }
     }
 }

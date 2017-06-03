@@ -16,6 +16,10 @@ public class DatabaseSettings extends Settings {
         return propertiesReader.readProperty("database.url");
     }
 
+    public String databaseName() {
+        return propertiesReader.readProperty("database.name");
+    }
+
     public String databaseUsername() {
         return propertiesReader.readProperty("database.username");
     }

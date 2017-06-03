@@ -7,8 +7,4 @@ CREATE TABLE IF NOT EXISTS staff (
   title           VARCHAR(150) NOT NULL,
   firstname       TEXT,
   surname         TEXT,
-  PRIMARY KEY     (id)
-);
-
-INSERT INTO staff (title, firstname, surname) VALUES
-('Mr', 'Ryan', 'Taplin');
+  PRIMARY KEY     (id));

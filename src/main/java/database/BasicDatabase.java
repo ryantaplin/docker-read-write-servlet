@@ -9,14 +9,14 @@ public class BasicDatabase {
     public Connection connection;
     private DatabaseSettings settings;
 
-    public BasicDatabase(DatabaseSettings settings) {
+    public BasicDatabase(DatabaseSettings settings, String databaseName) {
         try {
-            this.connection = DriverManager.getConnection(settings.databaseURL(), settings.databaseUsername(), settings.databasePassword());
+            this.connection = DriverManager.getConnection(settings.databaseURL() + databaseName, settings.databaseUsername(), settings.databasePassword());
         } catch (SQLException e) {
             e.printStackTrace();
         }
         this.settings = settings;
-        System.out.println(String.format("Accessing database '%s' with '%s'.", settings.databaseURL(), settings.databaseUsername()));
+        System.out.println(String.format("Accessing database '%s' as '%s'.", settings.databaseURL() + settings.databaseName(), settings.databaseUsername()));
     }
 
     public ResultSet query(String sql) throws SQLException {

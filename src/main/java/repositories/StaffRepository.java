@@ -1,6 +1,7 @@
 package repositories;
 
 import database.BasicDatabase;
+import database.BasicDatabaseBuilder;
 import model.Staff;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -9,15 +10,13 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static utils.Settings.getDatabaseSettings;
-
 public class StaffRepository implements Repository {
 
     private String TABLE_NAME = "staff";
     private BasicDatabase database;
 
     public StaffRepository() throws SQLException {
-        this.database = new BasicDatabase(getDatabaseSettings());
+        this.database = BasicDatabaseBuilder.as("sky").build();
     }
 
     @Override

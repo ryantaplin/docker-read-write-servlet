@@ -51,7 +51,7 @@ public class StatusServlet extends HttpServlet {
         DatabaseSettings settings = getDatabaseSettings();
 
         obj.put("Name", "MySQL Database");
-        obj.put("URL", settings.databaseURL());
+        obj.put("URL", settings.databaseURL() + settings.databaseName());
         obj.put("User", settings.databaseUsername());
         obj.put("Status", BasicDatabaseBuilder.build().status());
 
