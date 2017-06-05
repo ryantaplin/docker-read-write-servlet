@@ -10,8 +10,11 @@ ADD pom.xml /code/pom.xml
 RUN ["mvn", "dependency:resolve"]
 RUN ["mvn", "verify"]
 
+ADD sql /code/sql
 ADD src /code/src
 RUN ["mvn", "package"]
 
+ENV MAIN_CLASS_NAME App
+
 EXPOSE 8080
-CMD ["/usr/lib/jvm/java-8-openjdk-amd64/bin/java", "-jar", "target/App-jar-with-dependencies.jar"]
+CMD ["/usr/lib/jvm/java-8-openjdk-amd64/bin/java", "-jar", "target/${MAIN_CLASS_NAME}-jar-with-dependencies.jar"]

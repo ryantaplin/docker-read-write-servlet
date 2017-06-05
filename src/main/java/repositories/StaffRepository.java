@@ -16,7 +16,7 @@ public class StaffRepository implements Repository {
     private BasicDatabase database;
 
     public StaffRepository() throws SQLException {
-        this.database = BasicDatabaseBuilder.as("sky").build();
+        this.database = BasicDatabaseBuilder.build("sky");
     }
 
     @Override

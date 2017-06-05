@@ -50,10 +50,10 @@ public class StatusServlet extends HttpServlet {
         JSONObject obj = new JSONObject();
         DatabaseSettings settings = getDatabaseSettings();
 
-        obj.put("Name", "MySQL Database");
+        obj.put("Name", "MySQL Sky Database");
         obj.put("URL", settings.databaseURL() + settings.databaseName());
         obj.put("User", settings.databaseUsername());
-        obj.put("Status", BasicDatabaseBuilder.build().status());
+        obj.put("Status", BasicDatabaseBuilder.build("sky").status());
 
         return obj;
     }

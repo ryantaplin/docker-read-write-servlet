@@ -6,11 +6,6 @@ import server.BasicServer;
 import server.handlers.ReadHandlerBuilder;
 import server.handlers.WriteHandlerBuilder;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.Reader;
-
 import static utils.EnvironmentVariableReader.getAppRole;
 import static utils.EnvironmentVariableReader.getEnvironment;
 import static utils.FileReader.getFileReader;
@@ -19,6 +14,8 @@ import static utils.Settings.getServerSettings;
 public class App {
 
     public static void main(String[] args) {
+        System.out.printf("Application starting.%n%n");
+
         databaseChecksAndSetup();
 
         BasicServer server = new BasicServer(getServerSettings());
@@ -29,14 +26,16 @@ public class App {
     }
 
     private static void databaseChecksAndSetup() {
+        System.out.println("-------------------------");
         System.out.println("Running database scripts");
         System.out.println("-------------------------");
 
-        BasicDatabase database = BasicDatabaseBuilder.build();
+        BasicDatabase database =                BasicDatabaseBuilder.build("");
         ScriptRunner runner = new ScriptRunner(database.connection);
 
         runner.runScript(getFileReader("sql/schema.sql"));
         System.out.println("Database is up to date.");
+        System.out.println("-------------------------");
     }
 
 
