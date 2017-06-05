@@ -76,7 +76,7 @@ Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 - ~~Successfully deploy MySQL to docker (requires dualboot of Ubuntu)~~
 - ~~Create docker file for application using base JRE image~~.
 - ~~Deploy docker image successfully and get it successfully interact with MySQL container~~.
-- Research: Check if I can reference MySQL container URL by container name in Docker.
+- ~~Research: Check if I can reference MySQL container URL by container name in Docker~~.
 - Setup Kubernetes and deploy docker containers under Kubernetes.
 
 # TODO - Read Servlet
