@@ -20,10 +20,17 @@ The Docker-Read-Servlet will be able to accept various GET requests. Each reques
     docker build -t myapp ./
 ```
 
-2. Run the '**docker run**' command to start your application.
+2. Run the '**docker network create**' command to resolve containers by name. For more info [visit](http://www.dasblinkenlichten.com/docker-networking-101-user-defined-networks/).
 ```
-    docker run --name write-servlet -e ENVIRONMENT=docker -e ROLE=WRITE -p 8082:8080 -d -it myapp
-    docker run --name read-servlet  -e ENVIRONMENT=docker -e ROLE=READ -p 8082:8080 -d -it myapp
+docker network create --driver=bridge \
+--subnet=192.168.127.0/24 --gateway=192.168.127.1 \
+--ip-range=192.168.127.128/25 mybridge
+```
+
+3. Run the '**docker run**' command to start your application.
+```
+    docker run --name write-servlet --net=mybridge -e ENVIRONMENT=docker -e ROLE=WRITE -p 8082:8080 -d -it myapp
+    docker run --name read-servlet --net=mybridge -e ENVIRONMENT=docker -e ROLE=READ -p 8082:8080 -d -it myapp
 ```
 
 | Env Var       | Value                    |
@@ -35,7 +42,7 @@ The Docker-Read-Servlet will be able to accept various GET requests. Each reques
 
 1. Run the '**docker run**' command to pull mysql image and deploy it locally.
 ```
-    docker run --name mysql -e MYSQL_ROOT_PASSWORD=pass -d mysql:tag
+    docker run --name --net=mybridge mysql -e MYSQL_ROOT_PASSWORD=pass -d mysql:tag
 ```
 
 2. Run the '**docker exec**' command to go inside the container and run mysql commands.
