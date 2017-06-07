@@ -1,4 +1,4 @@
-# Docker-Read-Write Application ![Travis build status](https://travis-ci.org/RyanTaplin1705/docker-write-servlet.svg?branch=master "Build Status")
+# Docker-Read-Write Application ![Travis build status](https://travis-ci.org/RyanTaplin1705/docker-read-write-servlet.svg?branch=master "Build Status")
 
 As a placement student at Sky I have spent the past few months being exposed to the technology industry and their practices. One area that has interested me is the rise of scalable distrituable container platforms such as Docker.
 
