@@ -14,10 +14,10 @@ public class BasicDatabase {
         try {
             this.connection = DriverManager.getConnection(database, settings.databaseUsername(), settings.databasePassword());
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("There was a problem connecting to the database: " + database);
         }
         this.settings = settings;
-        System.out.println(String.format("Accessing database '%s' as '%s'.", database, settings.databaseUsername()));
+//        System.out.println(String.format("Accessing database '%s' as '%s'.", database, settings.databaseUsername()));
     }
 
     public ResultSet query(String sql) throws SQLException {
@@ -35,8 +35,8 @@ public class BasicDatabase {
     public String status() {
         try {
             return connection.isValid(settings.databaseTimeout()) ? "OK" : "FAIL";
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            //Do nothing
         }
         return "FAIL";
     }
