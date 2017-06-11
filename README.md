@@ -7,17 +7,17 @@ Docker has been the first piece of exposure to such platforms and as part of my 
 # The Implementation
 This application will support a two in one system. A write-servlet and a read-servlet. The role of the application will be determined at run time by the environment variable set by the user. The write and read servlets should run side by side allowing you to persist and read data from the database simultaneously.
 
-**Docker-Write**
-The docker-write-servlet will accept various POST requests of which will contain a body of JSON. This JSON will be unmarshelled and validated; if successfully validated it will be persisted to the database. 
+**Docker-Write** will accept various POST requests of which will contain a body of JSON. This JSON will be unmarshelled and validated; if successfully validated it will be persisted to the database. 
 
-**Docker-Read**
-The docker-read-servlet will be able to accept various GET requests. Each request will return a body of JSON back with a relevent message and code. This JSON will be formed from data found in the instance of my database - if the value is not found then an error will be returned as a result of this.
+**Docker-Read** will be able to accept various GET requests. Each request will return a body of JSON back with a relevent message and code. This JSON will be formed from data found in the instance of my database - if the value is not found then an error will be returned as a result of this.
 
 **Database**
+
 At this point in time I foresee the database being a single point of failure but ultimately I would also like to make MySQL scalable. My choice of database is currently an instance of [MySQL](https://www.mysql.com/).
 
 **Note: 11/06/17**
 Change database to [Oracle](https://hub.docker.com/search/?isAutomated=0&isOfficial=0&page=1&pullCount=0&q=oracle&starCount=0) to support database editioning.
+
 
 ![Diagram of Applications](https://image.ibb.co/ebSXtF/Write_Read_Serv.png)
 
@@ -78,7 +78,7 @@ docker service create --replicas 3 --name app2 --network=myoverlay  -e ENVIRONME
 ```
 
 
-# MySQL Running Statements Manually
+# Running MySQL Statements Manually in Docker
 1. Run the '**docker exec**' command to go inside the container and run mysql commands.
 ```
     docker exec -it mysql /bin/bash
