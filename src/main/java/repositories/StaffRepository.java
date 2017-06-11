@@ -24,7 +24,6 @@ public class StaffRepository implements Repository {
         return convertResultsToJson(database.query(String.format("SELECT * FROM %s", TABLE_NAME)));
     }
 
-    @Override
     public JSONArray getBySurname(String surname) throws SQLException {
        return convertResultsToJson(database.query(String.format("SELECT * FROM %s WHERE %s=%s", TABLE_NAME, StaffColumn.SURNAME, surname)));
     }

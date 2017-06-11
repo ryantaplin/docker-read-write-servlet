@@ -6,10 +6,8 @@ import java.util.Properties;
 
 import static java.lang.String.format;
 
-/*
-    Author: tjheslin1
-    Github: https://github.com/tjheslin1
-*/
+/*  Author: tjheslin1
+    Github: https://github.com/tjheslin1  */
 
 public class PropertiesReader {
 

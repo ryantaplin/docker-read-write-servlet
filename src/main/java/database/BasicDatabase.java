@@ -17,7 +17,6 @@ public class BasicDatabase {
             System.out.println("There was a problem connecting to the database: " + database);
         }
         this.settings = settings;
-//        System.out.println(String.format("Accessing database '%s' as '%s'.", database, settings.databaseUsername()));
     }
 
     public ResultSet query(String sql) throws SQLException {

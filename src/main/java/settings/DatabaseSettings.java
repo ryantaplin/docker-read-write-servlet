@@ -12,6 +12,10 @@ public class DatabaseSettings extends Settings {
         return Integer.parseInt(propertiesReader.readProperty("database.timeout"));
     }
 
+    public int databaseMaxRetryAttempts() {
+        return Integer.parseInt(propertiesReader.readProperty("database.maxAttempts"));
+    }
+
     public String databaseURL() {
         return propertiesReader.readProperty("database.url");
     }
