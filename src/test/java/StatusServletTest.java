@@ -4,6 +4,7 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -12,16 +13,25 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 
-public class ReadyServletTest extends AbstractAcceptanceTest {
+public class StatusServletTest extends AbstractAcceptanceTest {
 
     private CloseableHttpResponse response;
     private String responseBody;
 
+    //TODO: Mock database so I can edit probe responses
+
+//    @Test
+//    public void shouldReturnOKWhenAllProbesAreSuccessful() throws Exception {
+//        when(weHitEndpoint("status"));
+//        thenTheResponseCodeIs(200);
+//        andTheResposeBodyIs("{\"Status\":\"FAIL\",\"Environment\":\"localhost\",\"probes\":[{\"Status\":\"FAIL\",\"Description\":\"[user=root][url=jdbc:mysql://192.168.127.128:3306/sky]\",\"Name\":\"MySQL sky Database\"}]}");
+//    }
+
     @Test
-    public void shouldReturnOK() throws Exception {
-        when(weHitEndpoint("ready"));
+    public void shouldReturnFailWhenOneOrMoreProbesFail() throws Exception {
+        when(weHitEndpoint("status"));
         thenTheResponseCodeIs(200);
-        andTheResposeBodyIs("OK");
+        andTheResposeBodyIs("{\"Status\":\"FAIL\",\"Environment\":\"localhost\",\"probes\":[{\"Status\":\"FAIL\",\"Description\":\"[user=root][url=jdbc:mysql://192.168.127.128:3306/sky]\",\"Name\":\"MySQL sky Database\"}]}");
     }
 
     private ActionUnderTest weHitEndpoint(String endpoint) throws IOException {

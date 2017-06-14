@@ -1,5 +1,5 @@
-import static Setup.DatabaseSetup.databaseSetupIsHealthy;
-import static Setup.ServerSetup.startServer;
+import static setup.DatabaseSetup.databaseSetupIsHealthy;
+import static setup.ServerSetup.startServer;
 import static utils.Settings.getDatabaseSettings;
 
 public class App {

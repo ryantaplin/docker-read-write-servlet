@@ -1,6 +1,8 @@
 package server.servlets;
 
 import database.BasicDatabaseBuilder;
+import model.Probe;
+import model.Status;
 import settings.DatabaseSettings;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -11,7 +13,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+import static java.util.Arrays.asList;
 import static utils.Settings.getDatabaseSettings;
 
 public class StatusServlet extends HttpServlet {
@@ -19,42 +24,9 @@ public class StatusServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
-        statusPageAsJSON().write(response.getWriter());
-    }
 
-    private JSONObject statusPageAsJSON() {
-        JSONObject obj = new JSONObject();
-        JSONArray probes = getProbes();
+        List<Probe> probes = asList(BasicDatabaseBuilder.build("sky").probe());
 
-        obj.put("Status", getOverallStatus(probes)); //hard coded; needs implementing
-        obj.put("probes", probes);
-        obj.put("Environment", EnvironmentVariableReader.getEnvironment());
-
-        return obj;
-    }
-
-    private String getOverallStatus(JSONArray probes) {
-        for (int i = 0; i < probes.length(); i++) {
-            if (probes.getJSONObject(i).toString().equals("FAIL")) return "FAIL";
-        }
-        return "OK";
-    }
-
-    private JSONArray getProbes() {
-        JSONArray array = new JSONArray();
-        array.put(getDatabaseProbe());
-        return array;
-    }
-
-    private JSONObject getDatabaseProbe()  {
-        JSONObject obj = new JSONObject();
-        DatabaseSettings settings = getDatabaseSettings();
-
-        obj.put("Name", "MySQL Sky Database");
-        obj.put("URL", settings.databaseURL() + settings.databaseName());
-        obj.put("User", settings.databaseUsername());
-        obj.put("Status", BasicDatabaseBuilder.build("sky").status());
-
-        return obj;
+        new Status(probes).json().write(response.getWriter());
     }
 }

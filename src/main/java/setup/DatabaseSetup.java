@@ -1,4 +1,4 @@
-package Setup;
+package setup;
 
 import database.BasicDatabase;
 import database.BasicDatabaseBuilder;

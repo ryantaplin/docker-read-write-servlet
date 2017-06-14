@@ -1,4 +1,4 @@
-package Setup;
+package setup;
 
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import server.BasicServer;
