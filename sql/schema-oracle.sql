@@ -17,6 +17,12 @@ GRANT CREATE any procedure TO app.owner;
 GRANT CREATE sequence TO app.owner;
 GRANT CREATE synonym TO app.owner;
 
+/* Can create and delete editions */
+GRANT CREATE ANY EDITION, DROP ANY EDITION to app.owner;
+
+/* Can use editions */
+ALTER USER app.owner ENABLE EDITIONS;
+
 ALTER SESSION SET CURRENT_SCHEMA = app.owner;
 
 CREATE TABLE staff (
@@ -32,3 +38,13 @@ CREATE SEQUENCE seq_staff_id
   START WITH 1
   INCREMENT BY 1
 CACHE 10;
+
+ALTER SESSION SET EDITION = ora$base;
+
+CREATE EDITIONING VIEW staff_view AS
+  SELECT staff_id, title, firstname, surname  FROM staff;
+
+CREATE EDITION testANewEditionView;
+ALTER SESSION SET EDITION = testANewEditionView;
+CREATE EDITIONING VIEW staff_view AS
+  SELECT title, firstname, surname  FROM staff;
