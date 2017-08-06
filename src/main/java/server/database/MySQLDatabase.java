@@ -7,7 +7,7 @@ import java.sql.*;
 
 public class MySQLDatabase implements Database {
 
-    public Connection connection;
+    private Connection connection;
     private DatabaseProperties properties;
     private String databaseName;
 
@@ -35,6 +35,10 @@ public class MySQLDatabase implements Database {
                 "MySQL %s Database", databaseName),
                 status(),
                 String.format("[user=%s][url=%s]", properties.databaseUsername(), properties.databaseURL() + databaseName));
+    }
+
+    public Connection connection() {
+        return connection;
     }
 
     public String status() {

@@ -2,6 +2,7 @@ package server.database;
 
 import server.jetty.servlets.model.Probe;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -11,6 +12,7 @@ public interface Database {
     ResultSet query(String sql) throws SQLException;
     Probe probe();
     String status();
+    Connection connection();
 
     void update(String sql) throws SQLException;
 

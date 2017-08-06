@@ -9,11 +9,14 @@ import server.jetty.servlets.AddServlet;
 import server.jetty.servlets.ReadServlet;
 import server.jetty.servlets.ReadyServlet;
 import server.jetty.servlets.StatusServlet;
+import server.jetty.servlets.model.Probe;
+import server.jetty.servlets.model.Status;
 import utils.readers.EnvironmentVariableReader;
 import utils.readers.PropertiesReader;
 
 import javax.servlet.http.HttpServlet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class WiringImpl implements Wiring {
 
@@ -43,15 +46,23 @@ public class WiringImpl implements Wiring {
         return new AddServlet(this);
     }
 
+    public Database database() {
+        return new DatabaseBuilder(this).build(DATABASE_NAME);
+    }
+
+    public EnvironmentVariableReader environmentVariableReader() {
+        return new EnvironmentVariableReader(this);
+    }
+
+    public Status status(List<Probe> probes) {
+        return new Status(probes, this);
+    }
+
     public StaffRepository staffRepository() throws SQLException {
         return new StaffRepository(this);
     }
 
-    public Database database() {
-        return DatabaseBuilder.build(DATABASE_NAME);
-    }
-
     private PropertiesReader getPropertiesReader() {
-        return new PropertiesReader(EnvironmentVariableReader.getEnvironment());
+        return new PropertiesReader(environmentVariableReader().getEnvironment());
     }
 }

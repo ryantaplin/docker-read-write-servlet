@@ -1,3 +1,5 @@
+package acceptance;
+
 import com.googlecode.yatspec.state.givenwhenthen.ActionUnderTest;
 import com.googlecode.yatspec.state.givenwhenthen.CapturedInputAndOutputs;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -5,26 +7,47 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.junit.Test;
+import org.mockito.BDDMockito;
+import server.database.MySQLDatabase;
+import server.jetty.servlets.model.Probe;
 
 import java.io.IOException;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
 
 
-public class ReadyServletTest extends AbstractAcceptanceTest {
+public class StatusServletTest extends AbstractAcceptanceTest {
 
     private CloseableHttpResponse response;
     private String responseBody;
 
+    private MySQLDatabase database = mock(MySQLDatabase.class);
+
     @Test
-    public void shouldReturnOK() throws Exception {
-        when(weHitEndpoint("ready"));
+    public void shouldReturnOKWhenAllProbesAreSuccessful() throws Exception {
+        givenDatabaseProbeIsSuccessful();
+
+        when(whenWeHitEndpoint("status"));
+
         thenTheResponseCodeIs(200);
-        andTheResposeBodyIs("OK");
+        andTheResposeBodyIs("{\"Status\":\"OK\",\"Environment\":\"acceptancetest\",\"probes\":[{\"Status\":\"OK\",\"Description\":\"[user=root][url=jdbc:mysql://db/test]\",\"Name\":\"Test Database\"}]}");
     }
 
-    private ActionUnderTest weHitEndpoint(String endpoint) throws IOException {
+    @Test
+    public void shouldReturnFailWhenOneOrMoreProbesFail() throws Exception {
+        givenDatabaseProbeIsNotSuccessful();
+
+        whenWeHitEndpoint("status");
+
+        thenTheResponseCodeIs(200);
+        andTheResposeBodyIs("{\"Status\":\"FAIL\",\"Environment\":\"acceptancetest\",\"probes\":[{\"Status\":\"FAIL\",\"Description\":\"[user=root][url=jdbc:mysql://db/test]\",\"Name\":\"Test Database\"}]}");
+    }
+
+    private ActionUnderTest whenWeHitEndpoint(String endpoint) throws IOException {
+        whenApplicationIsStarted();
+
         String url = "http://localhost:8080/" + endpoint;
         return (interestingGivens, capturedInputAndOutputs) -> whenWeHitEndpoint(capturedInputAndOutputs, getRequestTo(url));
     }
@@ -35,6 +58,16 @@ public class ReadyServletTest extends AbstractAcceptanceTest {
         capturedInputAndOutputs.add(String.format("Request from %s to %s", "User", "Server"), url);
         capturedInputAndOutputs.add(String.format("Response from %s to %s", "Server", "User"), responseBody);
         return capturedInputAndOutputs;
+    }
+
+    private void givenDatabaseProbeIsSuccessful() {
+        BDDMockito.given(database.probe()).willReturn(new Probe("Test Database", "OK", "[user=root][url=jdbc:mysql://db/test]"));
+        wiring.setDatabase(database);
+    }
+
+    private void givenDatabaseProbeIsNotSuccessful() {
+        BDDMockito.given(database.probe()).willReturn(new Probe("Test Database", "FAIL", "[user=root][url=jdbc:mysql://db/test]"));
+        wiring.setDatabase(database);
     }
 
     private void thenTheResponseCodeIs(int responseCode) {

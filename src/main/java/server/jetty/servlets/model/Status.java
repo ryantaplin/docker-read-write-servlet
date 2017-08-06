@@ -2,16 +2,20 @@ package server.jetty.servlets.model;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import server.wiring.Wiring;
 import utils.readers.EnvironmentVariableReader;
 
 import java.util.List;
 import java.util.stream.Stream;
 
 public class Status {
-    private List<Probe> probes;
 
-    public Status(List<Probe> probes) {
+    private List<Probe> probes;
+    private Wiring wiring;
+
+    public Status(List<Probe> probes, Wiring wiring) {
         this.probes = probes;
+        this.wiring = wiring;
     }
 
     private String status() {
@@ -26,7 +30,7 @@ public class Status {
         return new JSONObject()
                 .put("Status", status())
                 .put("probes", jsonArray)
-                .put("Environment", EnvironmentVariableReader.getEnvironment());
+                .put("Environment", wiring.environmentVariableReader().getEnvironment());
     }
 
 }

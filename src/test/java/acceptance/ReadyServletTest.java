@@ -1,3 +1,5 @@
+package acceptance;
+
 import com.googlecode.yatspec.state.givenwhenthen.ActionUnderTest;
 import com.googlecode.yatspec.state.givenwhenthen.CapturedInputAndOutputs;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -5,7 +7,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.junit.Test;
-import utils.readers.EnvironmentVariableReader;
 
 import java.io.IOException;
 
@@ -13,26 +14,16 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 
-public class StatusServletTest extends AbstractAcceptanceTest {
+public class ReadyServletTest extends AbstractAcceptanceTest {
 
     private CloseableHttpResponse response;
     private String responseBody;
 
-    //TODO: Mock server.database so I can edit probe responses
-//    @Test
-//    public void shouldReturnOKWhenAllProbesAreSuccessful() throws Exception {
-//        when(weHitEndpoint("status"));
-//        thenTheResponseCodeIs(200);
-//        andTheResposeBodyIs("{\"Status\":\"FAIL\",\"Environment\":\"localhost\",\"probes\":[{\"Status\":\"FAIL\",\"Description\":\"[user=root][url=jdbc:mysql://192.168.127.128:3306/sky]\",\"Name\":\"MySQL sky Database\"}]}");
-//    }
-
-    //TODO temporary fix for test failing on ci; need to mock EnvironmentVariableReader (requires implementation of Wiring logic)
     @Test
-    public void shouldReturnFailWhenOneOrMoreProbesFail() throws Exception {
-        String environment = EnvironmentVariableReader.getEnvironment();
-        when(weHitEndpoint("status"));
+    public void shouldReturnOK() throws Exception {
+        when(weHitEndpoint("ready"));
         thenTheResponseCodeIs(200);
-        andTheResposeBodyIs("{\"Status\":\"FAIL\",\"Environment\":\"" + environment + "\",\"probes\":[{\"Status\":\"FAIL\",\"Description\":\"[user=root][url=jdbc:mysql://192.168.127.128:3306/sky]\",\"Name\":\"MySQL sky Database\"}]}");
+        andTheResposeBodyIs("OK");
     }
 
     private ActionUnderTest weHitEndpoint(String endpoint) throws IOException {

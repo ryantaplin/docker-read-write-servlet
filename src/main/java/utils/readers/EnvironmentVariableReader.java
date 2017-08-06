@@ -1,18 +1,26 @@
 package utils.readers;
 
+import server.wiring.Wiring;
+
 public class EnvironmentVariableReader {
 
-    public static String getEnvironment() {
+    private Wiring wiring;
+
+    public EnvironmentVariableReader(Wiring wiring) {
+        this.wiring = wiring;
+    }
+
+    public String getEnvironment() {
         String environment = getVariable("ENVIRONMENT");
         return environment != null ? environment.toLowerCase() : "localhost";
     }
 
-    public static String getAppRole() {
+    public String getAppRole() {
         String role = getVariable("ROLE");
         return role != null ? role.toLowerCase() : "READ";
     }
 
-    private static String getVariable(String variable) {
+    private String getVariable(String variable) {
         return System.getenv(variable);
     }
 }
