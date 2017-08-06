@@ -39,11 +39,13 @@ CREATE SEQUENCE seq_staff_id
   INCREMENT BY 1
 CACHE 10;
 
+/* Create base edition view under base ora$base */
 ALTER SESSION SET EDITION = ora$base;
-
 CREATE EDITIONING VIEW staff_view AS
   SELECT staff_id, title, firstname, surname  FROM staff;
 
+
+/* Create new edition, set session to it and create new custom view */
 CREATE EDITION testANewEditionView;
 ALTER SESSION SET EDITION = testANewEditionView;
 CREATE EDITIONING VIEW staff_view AS
