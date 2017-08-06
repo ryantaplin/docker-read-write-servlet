@@ -5,18 +5,18 @@ As a placement student at Sky I have spent the past few months being exposed to 
 Docker has been the first piece of exposure to such platforms and as part of my own investigation I plan to create two independent application that run side by side. A docker-write-servlet and a docker-read-servlet.
 
 # The Implementation
-This application will support a two in one system. A write-servlet and a read-servlet. The role of the application will be determined at run time by the environment variable set by the user. The write and read servlets should run side by side allowing you to persist and read data from the database simultaneously.
+This application will support a two in one system. A write-servlet and a read-servlet. The role of the application will be determined at run time by the environment variable set by the user. The write and read servlets should run side by side allowing you to persist and read data from the server.database simultaneously.
 
-**Docker-Write** will accept various POST requests of which will contain a body of JSON. This JSON will be unmarshelled and validated; if successfully validated it will be persisted to the database. 
+**Docker-Write** will accept various POST requests of which will contain a body of JSON. This JSON will be unmarshelled and validated; if successfully validated it will be persisted to the server.database.
 
-**Docker-Read** will be able to accept various GET requests. Each request will return a body of JSON back with a relevent message and code. This JSON will be formed from data found in the instance of my database - if the value is not found then an error will be returned as a result of this.
+**Docker-Read** will be able to accept various GET requests. Each request will return a body of JSON back with a relevent message and code. This JSON will be formed from data found in the instance of my server.database - if the value is not found then an error will be returned as a result of this.
 
 **Database**
 
-At this point in time I foresee the database being a single point of failure but ultimately I would also like to make MySQL scalable. My choice of database is currently an instance of [MySQL](https://www.mysql.com/).
+At this point in time I foresee the server.database being a single point of failure but ultimately I would also like to make MySQL scalable. My choice of server.database is currently an instance of [MySQL](https://www.mysql.com/).
 
 **Note: 11/06/17**
-Change database to [Oracle](https://hub.docker.com/search/?isAutomated=0&isOfficial=0&page=1&pullCount=0&q=oracle&starCount=0) to support database editioning.
+Change server.database to [Oracle](https://hub.docker.com/search/?isAutomated=0&isOfficial=0&page=1&pullCount=0&q=oracle&starCount=0) to support server.database editioning.
 
 
 ![Diagram of Applications](https://image.ibb.co/ebSXtF/Write_Read_Serv.png)
@@ -35,7 +35,7 @@ docker network create --driver=bridge \
 --ip-range=192.168.127.128/25 mybridge
 ```
 
-2. Start up an instance of your database from [Dockerhub](https://hub.docker.com/_/mysql/) by running the '**docker run**' command.
+2. Start up an instance of your server.database from [Dockerhub](https://hub.docker.com/_/mysql/) by running the '**docker run**' command.
 ```
     docker run --name --net=mybridge mysql -e MYSQL_ROOT_PASSWORD=pass -d mysql:tag
 ```
@@ -63,7 +63,7 @@ docker network create -d overlay --subnet=10.10.10.0/24 myoverlay
 docker swarm init
 ```
 
-3. Start up an instance of your database from [Dockerhub](https://hub.docker.com/_/mysql/) by running the '**docker service create**' command.
+3. Start up an instance of your server.database from [Dockerhub](https://hub.docker.com/_/mysql/) by running the '**docker service create**' command.
 - replicas is the number of instances of your application that will be running at any given time. 
 - You must also have created a network overlay **not** a bridge.
 
@@ -101,12 +101,12 @@ Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 ```
 
 # TODO - Write Servlet
-- ~~Apply database write mechanism to application.~~
-- ~~Apply database update mechanism to application~~.
+- ~~Apply server.database write mechanism to application.~~
+- ~~Apply server.database update mechanism to application~~.
 - ~~Apply some logic to input data (unmarshalling/validation/manipulation)~~
-- ~~Create database schema~~.
-- ~~Create script to apply database schema if tables don't exist~~.
-- Think about how to do database versioning. (via script?)
+- ~~Create server.database schema~~.
+- ~~Create script to apply server.database schema if tables don't exist~~.
+- Think about how to do server.database versioning. (via script?)
 - ~~Successfully deploy MySQL to docker (requires dualboot of Ubuntu)~~
 - ~~Create docker file for application using base JRE image~~.
 - ~~Deploy docker image successfully and get it successfully interact with MySQL container~~.
@@ -114,9 +114,9 @@ Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 - Setup Kubernetes and deploy docker containers under Kubernetes.
 
 # TODO - Read Servlet
-- ~~Apply database read mechanism to application.~~ (May need to be revisited with more advanced queries).
+- ~~Apply server.database read mechanism to application.~~ (May need to be revisited with more advanced queries).
 - Apply some logic to data pulled from data (unmarshalling/validation/manipulation)
-- Think about how to do database versioning and how this app will handle it.
+- Think about how to do server.database versioning and how this app will handle it.
 - ~~Create docker file for application using base JRE image.~~
 - ~~Deploy docker image successfully and get it successfully interact with MySQL container.~~
 - Setup Kubernetes and deploy docker containers under Kubernetes.

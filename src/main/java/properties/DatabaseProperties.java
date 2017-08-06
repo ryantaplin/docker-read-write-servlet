@@ -1,10 +1,10 @@
-package settings;
+package properties;
 
-import utils.PropertiesReader;
+import utils.readers.PropertiesReader;
 
-public class DatabaseSettings extends Settings {
+public class DatabaseProperties extends Properties {
 
-    public DatabaseSettings(PropertiesReader propertiesReader) {
+    public DatabaseProperties(PropertiesReader propertiesReader) {
         super(propertiesReader);
     }
 
@@ -21,7 +21,7 @@ public class DatabaseSettings extends Settings {
     }
 
     public String databaseName() {
-        return propertiesReader.readProperty("database.name");
+        return propertiesReader.readProperty("server.database.name");
     }
 
     public String databaseUsername() {

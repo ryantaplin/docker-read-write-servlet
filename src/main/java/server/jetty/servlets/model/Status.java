@@ -1,8 +1,8 @@
-package model;
+package server.jetty.servlets.model;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import utils.EnvironmentVariableReader;
+import utils.readers.EnvironmentVariableReader;
 
 import java.util.List;
 import java.util.stream.Stream;

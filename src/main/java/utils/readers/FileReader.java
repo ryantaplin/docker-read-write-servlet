@@ -1,4 +1,4 @@
-package utils;
+package utils.readers;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

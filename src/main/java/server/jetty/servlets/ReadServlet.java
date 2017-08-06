@@ -1,6 +1,6 @@
-package server.servlets;
+package server.jetty.servlets;
 
-import repositories.StaffRepository;
+import server.database.repositories.StaffRepository;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

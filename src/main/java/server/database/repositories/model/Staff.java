@@ -1,4 +1,4 @@
-package model;
+package server.database.repositories.model;
 
 import org.json.JSONObject;
 
@@ -18,7 +18,7 @@ public class Staff {
         return new Staff(json.getString("title"), json.getString("firstname"), json.getString("surname"));
     }
 
-    public boolean isComplete() {
-        return firstname.isEmpty() && surname.isEmpty() && title.isEmpty();
+    public boolean notComplete() {
+        return firstname.isEmpty() || surname.isEmpty() || title.isEmpty();
     }
 }

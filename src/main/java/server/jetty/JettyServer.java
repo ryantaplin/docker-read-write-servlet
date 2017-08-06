@@ -1,15 +1,15 @@
-package server;
+package server.jetty;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
-import settings.ServerSettings;
+import properties.ServerProperties;
 
 import java.util.Arrays;
 
-public class BasicServer {
+public class JettyServer {
     private final Server server;
 
-    public BasicServer(ServerSettings settings) {
+    public JettyServer(ServerProperties settings) {
         this.server = new Server(settings.serverPort());
     }
 

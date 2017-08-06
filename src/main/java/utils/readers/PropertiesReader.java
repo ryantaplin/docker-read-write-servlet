@@ -1,4 +1,4 @@
-package utils;
+package utils.readers;
 
 import java.io.IOException;
 import java.io.InputStream;

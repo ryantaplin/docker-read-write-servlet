@@ -1,7 +1,7 @@
-package server.servlets;
+package server.jetty.servlets;
 
-import model.Staff;
-import repositories.StaffRepository;
+import server.database.repositories.model.Staff;
+import server.database.repositories.StaffRepository;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,7 +16,7 @@ public class AddServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String body = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
-        System.out.println(String.format("Received request to add body to database: '%s'%n", body));
+        System.out.println(String.format("Received request to add body to server.database: '%s'%n", body));
 
         Staff order = Staff.unmarshal(body);
         try {

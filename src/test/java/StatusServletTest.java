@@ -4,15 +4,13 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
-import org.json.JSONObject;
 import org.junit.Test;
-import utils.EnvironmentVariableReader;
+import utils.readers.EnvironmentVariableReader;
 
 import java.io.IOException;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static utils.EnvironmentVariableReader.getEnvironment;
 
 
 public class StatusServletTest extends AbstractAcceptanceTest {
@@ -20,7 +18,7 @@ public class StatusServletTest extends AbstractAcceptanceTest {
     private CloseableHttpResponse response;
     private String responseBody;
 
-    //TODO: Mock database so I can edit probe responses
+    //TODO: Mock server.database so I can edit probe responses
 
 //    @Test
 //    public void shouldReturnOKWhenAllProbesAreSuccessful() throws Exception {

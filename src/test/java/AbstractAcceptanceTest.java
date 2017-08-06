@@ -1,5 +1,4 @@
 import com.googlecode.yatspec.junit.SpecResultListener;
-import com.googlecode.yatspec.junit.SpecRunner;
 import com.googlecode.yatspec.junit.WithCustomResultListeners;
 import com.googlecode.yatspec.plugin.sequencediagram.ByNamingConventionMessageProducer;
 import com.googlecode.yatspec.plugin.sequencediagram.SequenceDiagramGenerator;
@@ -9,20 +8,19 @@ import com.googlecode.yatspec.rendering.html.HtmlResultRenderer;
 import com.googlecode.yatspec.state.givenwhenthen.TestState;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.runner.RunWith;
-import server.BasicServer;
-import server.handlers.WriteHandlerBuilder;
+import server.jetty.JettyServer;
+import server.jetty.handlers.WriteHandlerBuilder;
 
 import static java.util.Collections.singletonList;
-import static utils.Settings.getServerSettings;
+import static utils.Properties.getServerSettings;
 
 public class AbstractAcceptanceTest extends TestState implements WithCustomResultListeners {
 
-    private BasicServer server;
+    private JettyServer server;
 
     @Before
     public void setUp() throws Exception {
-        server = new BasicServer(getServerSettings());
+        server = new JettyServer(getServerSettings());
         server.withContext(new WriteHandlerBuilder().build());
         server.start();
     }

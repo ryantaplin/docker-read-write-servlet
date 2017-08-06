@@ -1,26 +1,25 @@
-package database;
+package server.database;
 
-import model.Probe;
-import org.json.JSONObject;
-import settings.DatabaseSettings;
+import server.jetty.servlets.model.Probe;
+import properties.DatabaseProperties;
 
 import java.sql.*;
 
-public class BasicDatabase {
+public class MySQLDatabase {
 
     public Connection connection;
-    private DatabaseSettings settings;
+    private DatabaseProperties properties;
     private String databaseName;
 
-    public BasicDatabase(DatabaseSettings settings, String databaseName) {
-        String database = settings.databaseURL() + databaseName;
+    public MySQLDatabase(DatabaseProperties properties, String databaseName) {
+        String database = properties.databaseURL() + databaseName;
         try {
-            this.connection = DriverManager.getConnection(database, settings.databaseUsername(), settings.databasePassword());
+            this.connection = DriverManager.getConnection(database, properties.databaseUsername(), properties.databasePassword());
         } catch (SQLException e) {
-            System.out.println("There was a problem connecting to the database: " + database);
+            System.out.println("There was a problem connecting to the server.database: " + database);
         }
         this.databaseName = databaseName;
-        this.settings = settings;
+        this.properties = properties;
     }
 
     public ResultSet query(String sql) throws SQLException {
@@ -39,12 +38,12 @@ public class BasicDatabase {
         return new Probe(String.format(
                 "MySQL %s Database", databaseName),
                 status(),
-                String.format("[user=%s][url=%s]", settings.databaseUsername(), settings.databaseURL() + databaseName));
+                String.format("[user=%s][url=%s]", properties.databaseUsername(), properties.databaseURL() + databaseName));
     }
 
     public String status() {
         try {
-            return connection.isValid(settings.databaseTimeout()) ? "OK" : "FAIL";
+            return connection.isValid(properties.databaseTimeout()) ? "OK" : "FAIL";
         } catch (Exception e) {
             //Do nothing
         }

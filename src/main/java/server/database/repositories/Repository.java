@@ -1,6 +1,6 @@
-package repositories;
+package server.database.repositories;
 
-import model.Staff;
+import server.database.repositories.model.Staff;
 import org.json.JSONArray;
 
 import java.sql.ResultSet;
@@ -9,7 +9,7 @@ import java.sql.SQLException;
 public interface Repository {
 
     JSONArray getAll() throws SQLException;
-    JSONArray find(String column, String criteria) throws SQLException;
+    JSONArray find(StaffColumn column, String criteria) throws SQLException;
     JSONArray convertResultsToJson(ResultSet result) throws SQLException;
 
     void insert(Staff order) throws SQLException;

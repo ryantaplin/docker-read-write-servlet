@@ -1,4 +1,4 @@
-package utils;
+package utils.readers;
 
 public class EnvironmentVariableReader {
 

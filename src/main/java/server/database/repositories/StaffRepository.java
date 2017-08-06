@@ -1,8 +1,8 @@
-package repositories;
+package server.database.repositories;
 
-import database.BasicDatabase;
-import database.BasicDatabaseBuilder;
-import model.Staff;
+import server.database.MySQLDatabase;
+import server.database.DatabaseBuilder;
+import server.database.repositories.model.Staff;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -13,10 +13,10 @@ import java.sql.SQLException;
 public class StaffRepository implements Repository {
 
     private String TABLE_NAME = "staff";
-    private BasicDatabase database;
+    private MySQLDatabase database;
 
     public StaffRepository() throws SQLException {
-        this.database = BasicDatabaseBuilder.build("sky");
+        this.database = DatabaseBuilder.build("sky");
     }
 
     @Override
@@ -24,21 +24,14 @@ public class StaffRepository implements Repository {
         return convertResultsToJson(database.query(String.format("SELECT * FROM %s", TABLE_NAME)));
     }
 
-    public JSONArray getBySurname(String surname) throws SQLException {
-       return convertResultsToJson(database.query(String.format("SELECT * FROM %s WHERE %s=%s", TABLE_NAME, StaffColumn.SURNAME, surname)));
-    }
-
     @Override
-    public JSONArray find(String column, String criteria) throws SQLException {
-        if (!StaffColumn.exists(column))
-            throw new NullPointerException(String.format("Column '%s' does not exist in table '%s'", column, TABLE_NAME));
-
+    public JSONArray find(StaffColumn column, String criteria) throws SQLException {
         return convertResultsToJson(database.query(String.format("SELECT * FROM %s WHERE %s=%s", TABLE_NAME, column, criteria)));
     }
 
     @Override
     public void insert(Staff order) throws SQLException {
-        if (order.isComplete()) throw new IllegalArgumentException("order is incomplete");
+        if (order.notComplete()) throw new IllegalArgumentException("order is incomplete");
 
         database.update(String.format("INSERT INTO %s (title, firstname, surname) VALUES\n" +
                 "('%s', '%s', '%s');", TABLE_NAME, order.title, order.firstname, order.surname));

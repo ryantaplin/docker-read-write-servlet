@@ -1,18 +1,18 @@
 package setup;
 
 import org.eclipse.jetty.servlet.ServletContextHandler;
-import server.BasicServer;
-import server.handlers.ReadHandlerBuilder;
-import server.handlers.WriteHandlerBuilder;
+import server.jetty.JettyServer;
+import server.jetty.handlers.ReadHandlerBuilder;
+import server.jetty.handlers.WriteHandlerBuilder;
 
-import static utils.EnvironmentVariableReader.getAppRole;
-import static utils.EnvironmentVariableReader.getEnvironment;
-import static utils.Settings.getServerSettings;
+import static utils.readers.EnvironmentVariableReader.getAppRole;
+import static utils.readers.EnvironmentVariableReader.getEnvironment;
+import static utils.Properties.getServerSettings;
 
 public class ServerSetup {
 
     public static void startServer() {
-        BasicServer server = new BasicServer(getServerSettings());
+        JettyServer server = new JettyServer(getServerSettings());
         server.withContext(getHandlerForApp());
         server.start();
         System.out.println(String.format("Server has successfully loaded under '%s' environment.", getEnvironment()));

@@ -1,6 +1,6 @@
 import static setup.DatabaseSetup.databaseSetupIsHealthy;
 import static setup.ServerSetup.startServer;
-import static utils.Settings.getDatabaseSettings;
+import static utils.Properties.getDatabaseSettings;
 
 public class App {
 

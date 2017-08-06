@@ -1,4 +1,4 @@
-package model;
+package server.jetty.servlets.model;
 
 import org.json.JSONObject;
 
