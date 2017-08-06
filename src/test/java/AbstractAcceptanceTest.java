@@ -16,7 +16,6 @@ import server.handlers.WriteHandlerBuilder;
 import static java.util.Collections.singletonList;
 import static utils.Settings.getServerSettings;
 
-@RunWith(SpecRunner.class)
 public class AbstractAcceptanceTest extends TestState implements WithCustomResultListeners {
 
     private BasicServer server;
