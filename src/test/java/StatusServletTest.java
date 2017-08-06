@@ -6,11 +6,13 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 import org.junit.Test;
+import utils.EnvironmentVariableReader;
 
 import java.io.IOException;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static utils.EnvironmentVariableReader.getEnvironment;
 
 
 public class StatusServletTest extends AbstractAcceptanceTest {
@@ -27,11 +29,13 @@ public class StatusServletTest extends AbstractAcceptanceTest {
 //        andTheResposeBodyIs("{\"Status\":\"FAIL\",\"Environment\":\"localhost\",\"probes\":[{\"Status\":\"FAIL\",\"Description\":\"[user=root][url=jdbc:mysql://192.168.127.128:3306/sky]\",\"Name\":\"MySQL sky Database\"}]}");
 //    }
 
+    //TODO temporary fix for test failing on ci; need to mock EnvironmentVariableReader (requires implementation of Wiring logic)
     @Test
     public void shouldReturnFailWhenOneOrMoreProbesFail() throws Exception {
+        String environment = EnvironmentVariableReader.getEnvironment();
         when(weHitEndpoint("status"));
         thenTheResponseCodeIs(200);
-        andTheResposeBodyIs("{\"Status\":\"FAIL\",\"Environment\":\"localhost\",\"probes\":[{\"Status\":\"FAIL\",\"Description\":\"[user=root][url=jdbc:mysql://192.168.127.128:3306/sky]\",\"Name\":\"MySQL sky Database\"}]}");
+        andTheResposeBodyIs("{\"Status\":\"FAIL\",\"Environment\":\"" + environment + "\",\"probes\":[{\"Status\":\"FAIL\",\"Description\":\"[user=root][url=jdbc:mysql://192.168.127.128:3306/sky]\",\"Name\":\"MySQL sky Database\"}]}");
     }
 
     private ActionUnderTest weHitEndpoint(String endpoint) throws IOException {
