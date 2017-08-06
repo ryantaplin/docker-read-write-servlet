@@ -25,7 +25,7 @@ public class DatabaseSetup {
 
         ScriptRunner runner = new ScriptRunner(database.connection);
 
-        runner.runScript(getFileReader("sql/schema.sql"));
+        runner.runScript(getFileReader("sql/schema-mysql.sql"));
 
         System.out.println("Database is up to date.");
         System.out.println("-------------------------");
