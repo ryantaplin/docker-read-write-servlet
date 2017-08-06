@@ -11,6 +11,7 @@ import com.googlecode.yatspec.state.givenwhenthen.TestState;
 import org.junit.After;
 import org.junit.Before;
 import org.mockito.BDDMockito;
+import server.jetty.servlets.model.AppRole;
 import server.wiring.TestWiringImpl;
 import setup.ServerSetup;
 import utils.readers.EnvironmentVariableReader;
@@ -55,7 +56,7 @@ public class AbstractAcceptanceTest extends TestState implements WithCustomResul
 
     private void givenEnvironmentIsAcceptanceTest() {
         BDDMockito.given(environmentVariableReader.getEnvironment()).willReturn("acceptancetest");
-        BDDMockito.given(environmentVariableReader.getAppRole()).willReturn("read");
+        BDDMockito.given(environmentVariableReader.getAppRole()).willReturn(AppRole.READ);
         wiring.setEnvironmentVariableReader(environmentVariableReader);
     }
 }

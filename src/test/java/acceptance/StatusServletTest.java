@@ -16,6 +16,7 @@ import java.io.IOException;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 
 public class StatusServletTest extends AbstractAcceptanceTest {
@@ -39,7 +40,7 @@ public class StatusServletTest extends AbstractAcceptanceTest {
     public void shouldReturnFailWhenOneOrMoreProbesFail() throws Exception {
         givenDatabaseProbeIsNotSuccessful();
 
-        whenWeHitEndpoint("status");
+        when(whenWeHitEndpoint("status"));
 
         thenTheResponseCodeIs(200);
         andTheResposeBodyIs("{\"Status\":\"FAIL\",\"Environment\":\"acceptancetest\",\"probes\":[{\"Status\":\"FAIL\",\"Description\":\"[user=root][url=jdbc:mysql://db/test]\",\"Name\":\"Test Database\"}]}");

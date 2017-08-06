@@ -1,6 +1,9 @@
 package utils.readers;
 
+import server.jetty.servlets.model.AppRole;
 import server.wiring.Wiring;
+
+import static server.jetty.servlets.model.AppRole.*;
 
 public class EnvironmentVariableReader {
 
@@ -15,9 +18,13 @@ public class EnvironmentVariableReader {
         return environment != null ? environment.toLowerCase() : "localhost";
     }
 
-    public String getAppRole() {
-        String role = getVariable("ROLE");
-        return role != null ? role.toLowerCase() : "READ";
+    public AppRole getAppRole() {
+        try {
+            return valueOf(getVariable("ROLE").toUpperCase());
+        } catch (Exception e) {
+            System.out.println("Environment variable app role not found - setting it to default");
+        }
+        return READ;
     }
 
     private String getVariable(String variable) {

@@ -5,7 +5,10 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import server.jetty.JettyServer;
 import server.jetty.handlers.ReadHandlerBuilder;
 import server.jetty.handlers.WriteHandlerBuilder;
+import server.jetty.servlets.model.AppRole;
 import server.wiring.Wiring;
+
+import static server.jetty.servlets.model.AppRole.*;
 
 public class ServerSetup {
 
@@ -24,10 +27,10 @@ public class ServerSetup {
 
     private static ServletContextHandler getHandlerForApp(Wiring wiring) {
         switch (wiring.environmentVariableReader().getAppRole()) {
-            case "write":
+            case WRITE:
                 System.out.println("Application has been assigned WRITE-role.");
                 return new WriteHandlerBuilder(wiring).withAddServlet().build();
-            case "read":
+            case READ:
                 System.out.println("Application has been assigned READ-role.");
                 return new ReadHandlerBuilder(wiring).withReadServlet().build();
             default:
