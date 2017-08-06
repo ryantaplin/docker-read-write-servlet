@@ -1,5 +1,7 @@
 package server.jetty.servlets;
 
+import server.wiring.Wiring;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +11,12 @@ import java.io.IOException;
 import static org.eclipse.jetty.http.HttpStatus.OK_200;
 
 public class ReadyServlet extends HttpServlet {
+
+    private Wiring wiring;
+
+    public ReadyServlet(Wiring wiring) {
+        this.wiring = wiring;
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -1,4 +1,4 @@
-package server.wiring;
+package server.wiring.endpoints;
 
 public abstract class Endpoints {
     public static final String READY_ENDPOINT = "/ready";

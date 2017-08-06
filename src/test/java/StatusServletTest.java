@@ -19,7 +19,6 @@ public class StatusServletTest extends AbstractAcceptanceTest {
     private String responseBody;
 
     //TODO: Mock server.database so I can edit probe responses
-
 //    @Test
 //    public void shouldReturnOKWhenAllProbesAreSuccessful() throws Exception {
 //        when(weHitEndpoint("status"));

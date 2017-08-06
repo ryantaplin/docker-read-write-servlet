@@ -5,7 +5,7 @@ import properties.DatabaseProperties;
 
 import java.sql.*;
 
-public class MySQLDatabase {
+public class MySQLDatabase implements Database {
 
     public Connection connection;
     private DatabaseProperties properties;
@@ -30,10 +30,6 @@ public class MySQLDatabase {
         createStatement().executeUpdate(sql);
     }
 
-    private Statement createStatement() throws SQLException {
-        return this.connection.createStatement(); //Default ResultSet => TYPE_FORWARD_ONLY (Read More)
-    }
-
     public Probe probe() {
         return new Probe(String.format(
                 "MySQL %s Database", databaseName),
@@ -48,5 +44,9 @@ public class MySQLDatabase {
             //Do nothing
         }
         return "FAIL";
+    }
+
+    private Statement createStatement() throws SQLException {
+        return this.connection.createStatement(); //Default ResultSet => TYPE_FORWARD_ONLY (Read More)
     }
 }

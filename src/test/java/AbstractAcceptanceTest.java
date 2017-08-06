@@ -10,18 +10,19 @@ import org.junit.After;
 import org.junit.Before;
 import server.jetty.JettyServer;
 import server.jetty.handlers.WriteHandlerBuilder;
+import server.wiring.WiringImpl;
 
 import static java.util.Collections.singletonList;
-import static utils.Properties.getServerSettings;
 
 public class AbstractAcceptanceTest extends TestState implements WithCustomResultListeners {
 
     private JettyServer server;
+    private WiringImpl wiring = new WiringImpl();
 
     @Before
     public void setUp() throws Exception {
-        server = new JettyServer(getServerSettings());
-        server.withContext(new WriteHandlerBuilder().build());
+        server = new JettyServer(wiring);
+        server.withContext(new WriteHandlerBuilder(wiring).build());
         server.start();
     }
 

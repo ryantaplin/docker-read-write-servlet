@@ -1,30 +1,38 @@
+import server.wiring.Wiring;
+import server.wiring.WiringImpl;
+
 import static setup.DatabaseSetup.databaseSetupIsHealthy;
 import static setup.ServerSetup.startServer;
-import static utils.Properties.getDatabaseSettings;
 
 public class App {
 
-    public static void main(String[] args) {
+    private static Wiring wiring;
+
+    public void main(String[] args) {
         System.out.printf("Application starting.%n%n");
-        startApplication(1);
+        startApplication(new WiringImpl());
     }
 
-    private static void startApplication(int attempts) {
-        int maxAttempts = getDatabaseSettings().databaseMaxRetryAttempts();
+    private void startApplication(Wiring wiring) {
+        App.wiring = wiring;
+        attemptDatabaseConnection(1);
+    }
 
-        if (attempts >= maxAttempts)
-            throw new RuntimeException("Database did not connect after " + maxAttempts + " attempts.");
+    private static void attemptDatabaseConnection(int attempts) {
+        int maxAttempts = wiring.databaseProperties().databaseMaxRetryAttempts();
 
         if (databaseSetupIsHealthy()) {
-            startServer();
+            startServer(wiring);
+        } else if (attempts >= maxAttempts) {
+            throw new RuntimeException("Database did not connect after " + maxAttempts + " attempts.");
         } else {
             System.out.println("Attempt " + attempts + " at starting the application.");
-            retryApplicationStartUp(attempts + 1);
+            retryDatabaseStartUp(attempts + 1);
         }
     }
 
-    private static void retryApplicationStartUp(int attempt) {
-        int retryTime = getDatabaseSettings().databaseTimeout();
+    private static void retryDatabaseStartUp(int attempt) {
+        int retryTime = wiring.databaseProperties().databaseTimeout();
         System.out.printf(String.format("Database status failed... Retrying in %d seconds. %n", retryTime));
         scheduleRetry(attempt, retryTime);
     }
@@ -34,7 +42,7 @@ public class App {
                 new java.util.TimerTask() {
                     @Override
                     public void run() {
-                        startApplication(attempt);
+                        attemptDatabaseConnection(attempt);
                     }
                 },
                 retryTime * 100

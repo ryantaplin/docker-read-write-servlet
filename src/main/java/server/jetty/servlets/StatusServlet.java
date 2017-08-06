@@ -3,6 +3,7 @@ package server.jetty.servlets;
 import server.database.DatabaseBuilder;
 import server.jetty.servlets.model.Probe;
 import server.jetty.servlets.model.Status;
+import server.wiring.Wiring;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,12 +16,16 @@ import static java.util.Arrays.asList;
 
 public class StatusServlet extends HttpServlet {
 
+    private Wiring wiring;
+
+    public StatusServlet(Wiring wiring) {
+        this.wiring = wiring;
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
-
-        List<Probe> probes = asList(DatabaseBuilder.build("sky").probe());
-
+        List<Probe> probes = asList(wiring.database().probe());
         new Status(probes).json().write(response.getWriter());
     }
 }

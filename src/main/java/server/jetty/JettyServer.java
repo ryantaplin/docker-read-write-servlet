@@ -2,15 +2,15 @@ package server.jetty;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
-import properties.ServerProperties;
+import server.wiring.Wiring;
 
 import java.util.Arrays;
 
 public class JettyServer {
     private final Server server;
 
-    public JettyServer(ServerProperties settings) {
-        this.server = new Server(settings.serverPort());
+    public JettyServer(Wiring wiring) {
+        this.server = new Server(wiring.serverProperties().serverPort());
     }
 
     public void withContext(ServletContextHandler servletHandler) {

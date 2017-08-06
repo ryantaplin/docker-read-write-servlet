@@ -12,7 +12,7 @@ public class Properties {
         return new ServerProperties(new PropertiesReader(getEnvironment()));
     }
 
-    public static DatabaseProperties getDatabaseSettings() {
+    public static DatabaseProperties getDatabaseProperties() {
         return new DatabaseProperties(new PropertiesReader(getEnvironment()));
     }
 }
