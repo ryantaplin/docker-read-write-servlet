@@ -18,7 +18,7 @@ GRANT CREATE any procedure TO app_owner;
 GRANT CREATE sequence TO app_owner;
 GRANT CREATE synonym TO app_owner;
 
-/* Some stuff for editions - what does enable editions mean? (look into) */
+/* Some stuff for editions - enabling editions allows user to create many editioned objects */
 GRANT CREATE ANY EDITION, DROP ANY EDITION to app_owner;
 ALTER USER app_owner ENABLE EDITIONS;
 
@@ -37,3 +37,17 @@ CREATE SEQUENCE seq_staff_id
   START WITH 1
   INCREMENT BY 1
 CACHE 10;
+
+/* No longer need to call this trigger in code; created oracle trigger to handle this */
+CREATE OR REPLACE TRIGGER BI_STAFF
+BEFORE INSERT ON staff
+FOR EACH ROW
+BEGIN
+  :new.staff_id := seq_staff_id.nextval;
+END;
+
+/* Insert values into database, can I remove the need to enter a dud value for id? */
+/* Probably with an edition view (remove id column) */
+INSERT INTO staff (STAFF_ID, TITLE, FIRSTNAME, SURNAME) VALUES (-1 ,'Mr', 'Ryan', 'Taplin');
+INSERT INTO staff (STAFF_ID, TITLE, FIRSTNAME, SURNAME) VALUES (-1 ,'Mr', 'John', 'Smith');
+INSERT INTO staff (STAFF_ID, TITLE, FIRSTNAME, SURNAME) VALUES (-1 ,'Miss', 'Arya', 'Stark');
