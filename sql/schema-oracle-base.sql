@@ -46,8 +46,12 @@ BEGIN
   :new.staff_id := seq_staff_id.nextval;
 END;
 
-/* Insert values into database, can I remove the need to enter a dud value for id? */
-/* Probably with an edition view (remove id column) */
-INSERT INTO staff (STAFF_ID, TITLE, FIRSTNAME, SURNAME) VALUES (-1 ,'Mr', 'Ryan', 'Taplin');
-INSERT INTO staff (STAFF_ID, TITLE, FIRSTNAME, SURNAME) VALUES (-1 ,'Mr', 'John', 'Smith');
-INSERT INTO staff (STAFF_ID, TITLE, FIRSTNAME, SURNAME) VALUES (-1 ,'Miss', 'Arya', 'Stark');
+/* Create initial view to remove the id - allows us to enter into DB without providing a random integer. */
+CREATE OR REPLACE EDITIONING VIEW staff_view AS
+  SELECT title, firstname, surname  FROM staff;
+
+/* Insert values into database. */
+INSERT INTO staff_view (TITLE, FIRSTNAME, SURNAME) VALUES ('Mr', 'Ryan', 'Taplin');
+INSERT INTO staff_view (TITLE, FIRSTNAME, SURNAME) VALUES ('Mr', 'John', 'Smith');
+INSERT INTO staff_view (TITLE, FIRSTNAME, SURNAME) VALUES ('Miss', 'Arya', 'Stark');
+
