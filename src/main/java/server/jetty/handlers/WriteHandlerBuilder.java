@@ -2,7 +2,7 @@ package server.jetty.handlers;
 
 import server.wiring.Wiring;
 
-import static server.wiring.endpoints.WriteEndpoints.*;
+import static server.wiring.endpoints.WriteEndpoints.WRITE_ENDPOINT;
 
 public class WriteHandlerBuilder extends HandlerBuilder {
 

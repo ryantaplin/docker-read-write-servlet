@@ -3,6 +3,7 @@ package server.database;
 import server.jetty.servlets.model.Probe;
 import properties.DatabaseProperties;
 
+import oracle.jdbc.pool.OracleDataSource;
 import java.sql.*;
 
 public class OracleDatabase implements Database {
@@ -12,11 +13,18 @@ public class OracleDatabase implements Database {
     private String databaseName;
 
     OracleDatabase(DatabaseProperties properties, String databaseName) {
-        String database = properties.databaseURL();
         try {
-            this.connection = DriverManager.getConnection(database, properties.databaseUsername(), properties.databasePassword());
+            OracleDataSource ds = new OracleDataSource();
+
+            ds.setURL(properties.databaseURL());
+            ds.setUser(properties.databaseUsername());
+            ds.setPassword(properties.databasePassword());
+
+            this.connection = ds.getConnection();
+
+//            this.connection = DriverManager.getConnection(properties.databaseURL(), properties.databaseUsername(), properties.databasePassword());
         } catch (SQLException e) {
-            System.out.println("There was a problem connecting to the server.database: " + database);
+            System.out.println("There was a problem connecting to the server.database: " + properties.databaseURL());
         }
         this.databaseName = databaseName;
         this.properties = properties;

@@ -9,13 +9,13 @@ public class App {
 
     private static Wiring wiring;
 
-    public void main(String[] args) {
+    public static void main(String[] args) {
         System.out.printf("Application starting.%n%n");
         App.wiring = new WiringImpl();
         startApplication(1);
     }
 
-    public void startApplication(int attempts) {
+    public static void startApplication(int attempts) {
         int maxAttempts = wiring.databaseProperties().databaseMaxRetryAttempts();
 
         if (databaseSetupIsHealthy(wiring)) {
@@ -28,13 +28,13 @@ public class App {
         }
     }
 
-    private void retryDatabaseStartUp(int attempt) {
+    private static void retryDatabaseStartUp(int attempt) {
         int retryTime = wiring.databaseProperties().databaseTimeout();
         System.out.printf(String.format("Database status failed... Retrying in %d seconds. %n", retryTime));
         scheduleRetry(attempt, retryTime);
     }
 
-    private void scheduleRetry(int attempt, int retryTime) {
+    private static void scheduleRetry(int attempt, int retryTime) {
         new java.util.Timer().schedule(
                 new java.util.TimerTask() {
                     @Override
