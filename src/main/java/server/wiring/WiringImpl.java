@@ -4,6 +4,8 @@ import properties.DatabaseProperties;
 import properties.ServerProperties;
 import server.database.Database;
 import server.database.DatabaseBuilder;
+import server.database.OracleDatabase;
+import server.database.OracleDatabaseBuilder;
 import server.database.repositories.StaffRepository;
 import server.jetty.servlets.AddServlet;
 import server.jetty.servlets.ReadServlet;
@@ -47,7 +49,7 @@ public class WiringImpl implements Wiring {
     }
 
     public Database database() {
-        return new DatabaseBuilder(this).build(DATABASE_NAME);
+        return new OracleDatabaseBuilder(this).build(DATABASE_NAME);
     }
 
     public EnvironmentVariableReader environmentVariableReader() {

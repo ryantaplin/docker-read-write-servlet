@@ -8,7 +8,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.junit.Test;
 import org.mockito.BDDMockito;
-import server.database.MySQLDatabase;
+import server.database.OracleDatabase;
 import server.jetty.servlets.model.Probe;
 
 import java.io.IOException;
@@ -16,7 +16,6 @@ import java.io.IOException;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 
 public class StatusServletTest extends AbstractAcceptanceTest {
@@ -24,7 +23,7 @@ public class StatusServletTest extends AbstractAcceptanceTest {
     private CloseableHttpResponse response;
     private String responseBody;
 
-    private MySQLDatabase database = mock(MySQLDatabase.class);
+    private OracleDatabase database = mock(OracleDatabase.class);
 
     @Test
     public void shouldReturnOKWhenAllProbesAreSuccessful() throws Exception {

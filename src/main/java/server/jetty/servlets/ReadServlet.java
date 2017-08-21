@@ -17,7 +17,6 @@ public class ReadServlet extends HttpServlet {
         this.wiring = wiring;
     }
 
-    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)  {
         try {
             response.setContentType("application/json");

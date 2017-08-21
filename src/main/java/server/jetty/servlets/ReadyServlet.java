@@ -12,13 +12,12 @@ import static org.eclipse.jetty.http.HttpStatus.OK_200;
 
 public class ReadyServlet extends HttpServlet {
 
-    private Wiring wiring;
+//    private Wiring wiring;
 
     public ReadyServlet(Wiring wiring) {
-        this.wiring = wiring;
+//        this.wiring = wiring;
     }
 
-    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setStatus(OK_200);
         response.getWriter().write("OK");

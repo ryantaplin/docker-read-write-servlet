@@ -12,7 +12,7 @@ import static server.wiring.endpoints.WriteEndpoints.READY_ENDPOINT;
 public abstract class HandlerBuilder {
 
     Wiring wiring;
-    ServletContextHandler handler;
+    private ServletContextHandler handler;
 
     HandlerBuilder(Wiring wiring) {
         this.wiring = wiring;

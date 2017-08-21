@@ -23,7 +23,6 @@ public class AddServlet extends HttpServlet {
         this.wiring = wiring;
     }
 
-    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String body = request.getReader()
                 .lines().collect(joining(lineSeparator()));

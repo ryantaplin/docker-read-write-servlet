@@ -1,8 +1,6 @@
 package setup;
 
 import server.database.Database;
-import server.database.MySQLDatabase;
-import server.database.DatabaseBuilder;
 import org.apache.ibatis.jdbc.ScriptRunner;
 import server.wiring.Wiring;
 

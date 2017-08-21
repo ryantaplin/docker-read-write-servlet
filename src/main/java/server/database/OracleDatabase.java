@@ -5,14 +5,14 @@ import properties.DatabaseProperties;
 
 import java.sql.*;
 
-public class MySQLDatabase implements Database {
+public class OracleDatabase implements Database {
 
     private Connection connection;
     private DatabaseProperties properties;
     private String databaseName;
 
-    public MySQLDatabase(DatabaseProperties properties, String databaseName) {
-        String database = properties.databaseURL() + databaseName;
+    OracleDatabase(DatabaseProperties properties, String databaseName) {
+        String database = properties.databaseURL();
         try {
             this.connection = DriverManager.getConnection(database, properties.databaseUsername(), properties.databasePassword());
         } catch (SQLException e) {
@@ -30,27 +30,27 @@ public class MySQLDatabase implements Database {
         createStatement().executeUpdate(sql);
     }
 
-    public Probe probe() {
-        return new Probe(String.format(
-                "MySQL %s Database", databaseName),
-                status(),
-                String.format("[user=%s][url=%s]", properties.databaseUsername(), properties.databaseURL() + databaseName));
-    }
-
     public Connection connection() {
         return connection;
+    }
+
+    private Statement createStatement() throws SQLException {
+        return this.connection.createStatement(); //Default ResultSet => TYPE_FORWARD_ONLY (Read More)
+    }
+
+    public Probe probe() {
+        return new Probe(String.format(
+                "Oracle %s Database", databaseName),
+                status(),
+                String.format("[user=%s][url=%s]", properties.databaseUsername(), properties.databaseURL() + databaseName));
     }
 
     public String status() {
         try {
             return connection.isValid(properties.databaseTimeout()) ? "OK" : "FAIL";
-        } catch (Exception e) {
+        } catch (SQLException e) {
             //Do nothing
         }
         return "FAIL";
-    }
-
-    private Statement createStatement() throws SQLException {
-        return this.connection.createStatement(); //Default ResultSet => TYPE_FORWARD_ONLY (Read More)
     }
 }

@@ -22,7 +22,6 @@ public class StatusServlet extends HttpServlet {
         this.wiring = wiring;
     }
 
-    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
         List<Probe> probes = asList(wiring.database().probe());
