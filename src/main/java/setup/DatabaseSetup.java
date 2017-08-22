@@ -8,12 +8,13 @@ import static utils.readers.FileReader.getFileReader;
 
 public class DatabaseSetup {
 
+    //TODO fix this so that we can start running scripts on app start up again (new oracle scripts).
     public static boolean databaseSetupIsHealthy(Wiring wiring) {
         Database database = wiring.database();
         if (database.status().equals("FAIL")) {
             return false;
         } else {
-            databaseRunScripts(database);
+            //databaseRunScripts(database);
             return true;
         }
     }

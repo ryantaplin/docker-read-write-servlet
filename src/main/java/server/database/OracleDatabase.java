@@ -1,18 +1,22 @@
 package server.database;
 
-import server.jetty.servlets.model.Probe;
-import properties.DatabaseProperties;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Properties;
 
 import oracle.jdbc.pool.OracleDataSource;
-import java.sql.*;
+import oracle.jdbc.OracleConnection;
+import properties.DatabaseProperties;
+import server.jetty.servlets.model.Probe;
 
 public class OracleDatabase implements Database {
 
-    private Connection connection;
+    private OracleConnection connection;
     private DatabaseProperties properties;
-    private String databaseName;
 
-    OracleDatabase(DatabaseProperties properties, String databaseName) {
+    OracleDatabase(DatabaseProperties properties) {
         try {
             OracleDataSource ds = new OracleDataSource();
 
@@ -20,13 +24,10 @@ public class OracleDatabase implements Database {
             ds.setUser(properties.databaseUsername());
             ds.setPassword(properties.databasePassword());
 
-            this.connection = ds.getConnection();
-
-//            this.connection = DriverManager.getConnection(properties.databaseURL(), properties.databaseUsername(), properties.databasePassword());
+            this.connection = (OracleConnection) ds.getConnection();
         } catch (SQLException e) {
-            System.out.println("There was a problem connecting to the server.database: " + properties.databaseURL());
+            throw new RuntimeException("There was a problem connecting to the server.database: " + properties.databaseURL());
         }
-        this.databaseName = databaseName;
         this.properties = properties;
     }
 
@@ -47,16 +48,19 @@ public class OracleDatabase implements Database {
     }
 
     public Probe probe() {
-        return new Probe(String.format(
-                "Oracle %s Database", databaseName),
+        return new Probe(
+                "Oracle Database",
                 status(),
-                String.format("[user=%s][url=%s]", properties.databaseUsername(), properties.databaseURL() + databaseName));
+                String.format("[user=%s][url=%s]", properties.databaseUsername(), properties.databaseURL()));
     }
 
+
+    // TODO fix this check some how. No longer supporting .isValid atm (something to do with JDBC vs JDK version?)
     public String status() {
         try {
-            return connection.isValid(properties.databaseTimeout()) ? "OK" : "FAIL";
-        } catch (SQLException e) {
+            return connection != null ? "OK" : "FAIL";
+            // return connection.isValid(properties.databaseTimeout()) ? "OK" : "FAIL";
+        } catch (Exception e) {
             //Do nothing
         }
         return "FAIL";

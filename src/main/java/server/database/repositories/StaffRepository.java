@@ -19,6 +19,7 @@ public class StaffRepository implements Repository {
         this.database = wiring.database();
     }
 
+    //TODO this is never returning the correct data? - why
     public JSONArray getAll() throws SQLException {
         return convertResultsToJson(database.query(String.format("SELECT * FROM %s", TABLE_NAME)));
     }
@@ -30,8 +31,8 @@ public class StaffRepository implements Repository {
     public void insert(Staff order) throws SQLException {
         if (order.notComplete()) throw new IllegalArgumentException("order is incomplete");
 
-        database.update(String.format("INSERT INTO %s (title, firstname, surname) VALUES\n" +
-                "('%s', '%s', '%s');", TABLE_NAME, order.title, order.firstname, order.surname));
+        database.update(String.format("INSERT INTO %s (staff_id, title, firstname, surname) VALUES\n" +
+                "(5, '%s', '%s', '%s')", TABLE_NAME, order.title, order.firstname, order.surname));
     }
 
     public void removeById(int id) {
@@ -44,7 +45,7 @@ public class StaffRepository implements Repository {
             JSONObject obj = new JSONObject();
             obj.put("title", result.getString(StaffColumn.TITLE.toString()));
             obj.put("First Name", result.getString(StaffColumn.FIRSTNAME.toString()));
-            obj.put("firstname", result.getString(StaffColumn.SURNAME.toString()));
+            obj.put("Surname", result.getString(StaffColumn.SURNAME.toString()));
             array.put(obj);
         }
         return array;

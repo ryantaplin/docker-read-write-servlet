@@ -22,8 +22,6 @@ import java.util.List;
 
 public class WiringImpl implements Wiring {
 
-    private static final String DATABASE_NAME = "sky";
-
     public ServerProperties serverProperties() {
         return new ServerProperties(getPropertiesReader());
     }
@@ -49,7 +47,7 @@ public class WiringImpl implements Wiring {
     }
 
     public Database database() {
-        return new OracleDatabaseBuilder(this).build(DATABASE_NAME);
+        return new OracleDatabaseBuilder(this).build();
     }
 
     public EnvironmentVariableReader environmentVariableReader() {

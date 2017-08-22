@@ -21,7 +21,7 @@ public class JettyServer {
         try {
             server.start();
         } catch (Exception e) {
-            System.out.println(String.format("Server could not start: %n%s", Arrays.toString(e.getStackTrace())));
+            throw new RuntimeException(String.format("%n%nServer could not start: %n%s", Arrays.toString(e.getStackTrace())));
         }
     }
 
@@ -29,7 +29,7 @@ public class JettyServer {
         try {
             server.stop();
         } catch (Exception e) {
-            System.out.println(String.format("Server could not stop: %n%s%n", Arrays.toString(e.getStackTrace())));
+            throw new RuntimeException(String.format("%n%nServer could not stop: %n%s%n", Arrays.toString(e.getStackTrace())));
         }
     }
 }

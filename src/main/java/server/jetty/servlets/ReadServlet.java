@@ -1,6 +1,7 @@
 package server.jetty.servlets;
 
 import server.database.repositories.StaffRepository;
+import server.database.repositories.model.Staff;
 import server.wiring.Wiring;
 
 import javax.servlet.http.HttpServlet;

@@ -8,7 +8,7 @@ public class OracleDatabaseBuilder extends AbstractDatabaseBuilder {
         super(wiring);
     }
 
-    public OracleDatabase build(String databaseName) {
-        return new OracleDatabase(wiring.databaseProperties(), databaseName);
+    public OracleDatabase build() {
+        return new OracleDatabase(wiring.databaseProperties());
     }
 }
