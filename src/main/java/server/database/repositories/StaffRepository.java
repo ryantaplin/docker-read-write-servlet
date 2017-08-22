@@ -19,7 +19,6 @@ public class StaffRepository implements Repository {
         this.database = wiring.database();
     }
 
-    //TODO this is never returning the correct data? - why
     public JSONArray getAll() throws SQLException {
         return convertResultsToJson(database.query(String.format("SELECT * FROM %s", TABLE_NAME)));
     }

@@ -48,7 +48,7 @@ public class StatusServletTest extends AbstractAcceptanceTest {
     private ActionUnderTest whenWeHitEndpoint(String endpoint) throws IOException {
         whenApplicationIsStarted();
 
-        String url = "http://localhost:8080/" + endpoint;
+        String url = "http://localhost:" + wiring.serverProperties().serverPort() + "/" + endpoint;
         return (interestingGivens, capturedInputAndOutputs) -> whenWeHitEndpoint(capturedInputAndOutputs, getRequestTo(url));
     }
 
