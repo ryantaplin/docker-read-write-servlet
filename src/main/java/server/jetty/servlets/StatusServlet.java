@@ -1,8 +1,6 @@
 package server.jetty.servlets;
 
-import server.database.DatabaseBuilder;
 import server.jetty.servlets.model.Probe;
-import server.jetty.servlets.model.Status;
 import server.wiring.Wiring;
 
 import javax.servlet.ServletException;

@@ -18,7 +18,7 @@ public class OracleDatabase implements Database {
 
     //TODO push all of this db logic up into wiring so it is pushed through the app rather than being isolated here.
     // i.e. Connection
-    OracleDatabase(DatabaseProperties properties) {
+    public OracleDatabase(DatabaseProperties properties) {
         this.connection = new OracleConnectionFactory(properties).create();
         this.properties = properties;
     }

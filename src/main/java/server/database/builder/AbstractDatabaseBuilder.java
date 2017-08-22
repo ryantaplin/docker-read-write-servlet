@@ -1,4 +1,4 @@
-package server.database;
+package server.database.builder;
 
 import server.wiring.Wiring;
 
