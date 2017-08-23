@@ -57,6 +57,7 @@ public class AbstractAcceptanceTest extends TestState implements WithCustomResul
     private void givenEnvironmentIsAcceptanceTest() {
         BDDMockito.given(environmentVariableReader.getEnvironment()).willReturn("acceptancetest");
         BDDMockito.given(environmentVariableReader.getAppRole()).willReturn(AppRole.READ);
-        wiring.setEnvironmentVariableReader(environmentVariableReader);
+
+        BDDMockito.given(wiring.environmentVariableReader()).willReturn(environmentVariableReader);
     }
 }

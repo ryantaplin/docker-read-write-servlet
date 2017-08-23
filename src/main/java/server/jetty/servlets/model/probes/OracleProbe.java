@@ -1,4 +1,4 @@
-package server.jetty.servlets.model;
+package server.jetty.servlets.model.probes;
 
 public class OracleProbe extends Probe {
 

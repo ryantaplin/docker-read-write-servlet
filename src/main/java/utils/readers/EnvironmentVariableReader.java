@@ -3,31 +3,29 @@ package utils.readers;
 import server.jetty.servlets.model.AppRole;
 import server.wiring.Wiring;
 
+import static java.lang.System.getenv;
 import static server.jetty.servlets.model.AppRole.*;
 
 public class EnvironmentVariableReader {
 
-    private Wiring wiring;
-
-    public EnvironmentVariableReader(Wiring wiring) {
-        this.wiring = wiring;
-    }
-
     public String getEnvironment() {
-        String environment = getVariable("ENVIRONMENT");
+        String environment = getEnvironmentVariable("ENVIRONMENT");
         return environment != null ? environment.toLowerCase() : "localhost";
     }
 
+    //TODO make default value a configurable property?
     public AppRole getAppRole() {
+        String role = getEnvironmentVariable("ROLE").toUpperCase();
         try {
-            return valueOf(getVariable("ROLE").toUpperCase());
+            return valueOf(role);
         } catch (Exception e) {
-            System.out.println("Environment variable app role not found - setting it to default");
+            System.out.println("ROLE could not be recognised: " + role);
+            System.out.println("App role has been set to default value.");
         }
         return READ;
     }
 
-    private String getVariable(String variable) {
-        return System.getenv(variable);
+    private String getEnvironmentVariable(String variable) {
+        return getenv(variable);
     }
 }

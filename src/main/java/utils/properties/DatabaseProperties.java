@@ -1,4 +1,4 @@
-package properties;
+package utils.properties;
 
 import utils.readers.PropertiesReader;
 
@@ -20,16 +20,16 @@ public class DatabaseProperties extends Properties {
         return propertiesReader.readProperty("database.url");
     }
 
-    public String databaseName() {
-        return propertiesReader.readProperty("server.database.name");
-    }
-
     public String databaseUsername() {
         return propertiesReader.readProperty("database.username");
     }
 
     public String databasePassword() {
         return propertiesReader.readProperty("database.password");
+    }
+
+    public int databaseEdition() {
+        return Integer.parseInt(propertiesReader.readProperty("database.edition"));
     }
 
 }

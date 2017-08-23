@@ -1,6 +1,6 @@
 package server.database;
 
-import server.jetty.servlets.model.Probe;
+import server.jetty.servlets.model.probes.Probe;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

@@ -6,9 +6,8 @@ public abstract class AbstractDatabaseBuilder implements DatabaseBuilder {
 
     public Wiring wiring;
 
-    AbstractDatabaseBuilder(Wiring wiring) {
+    public AbstractDatabaseBuilder(Wiring wiring) {
         this.wiring = wiring;
     }
-
 
 }

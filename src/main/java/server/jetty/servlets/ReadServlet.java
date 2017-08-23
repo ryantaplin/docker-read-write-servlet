@@ -24,6 +24,7 @@ public class ReadServlet extends HttpServlet {
             StaffRepository repository = wiring.staffRepository();
             repository.getAll().write(response.getWriter());
         } catch (SQLException | IOException e) {
+            //TODO handle this better? Don't blow up - log error and continue;
             e.printStackTrace();
         }
     }

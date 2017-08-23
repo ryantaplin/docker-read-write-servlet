@@ -11,13 +11,24 @@ import static server.wiring.endpoints.WriteEndpoints.READY_ENDPOINT;
 
 public abstract class HandlerBuilder {
 
-    Wiring wiring;
+    public Wiring wiring;
     private ServletContextHandler handler;
 
-    HandlerBuilder(Wiring wiring) {
-        this.wiring = wiring;
+    HandlerBuilder() {
         this.handler = new ServletContextHandler();
         this.withStatusServlet().withReadyServlet();
+    }
+
+    public void addServlet(HttpServlet httpServlet, String endpoint) {
+        handler.addServlet(new ServletHolder(httpServlet), endpoint);
+    }
+
+    public void withWiring(Wiring wiring) {
+        this.wiring = wiring;
+    }
+
+    public ServletContextHandler build() {
+        return handler;
     }
 
     private HandlerBuilder withReadyServlet() {
@@ -28,13 +39,5 @@ public abstract class HandlerBuilder {
     private HandlerBuilder withStatusServlet() {
         addServlet(wiring.statusServlet(), STATUS_ENDPOINT);
         return this;
-    }
-
-    public ServletContextHandler build() {
-        return handler;
-    }
-
-    void addServlet(HttpServlet httpServlet, String endpoint) {
-        handler.addServlet(new ServletHolder(httpServlet), endpoint);
     }
 }

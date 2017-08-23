@@ -16,7 +16,7 @@ CREATE USER app_readonly
   
 GRANT staff_readonly TO app_readonly;
 
-/* Stupidly need to reference app_owner when I want to view table/view. */
+/* Stupidly need to reference app_owner when I want to view table/view under other users. */
 ALTER SESSION SET CURRENT_SCHEMA = app_readonly;
 
 --SELECT * FROM app_owner.staff;

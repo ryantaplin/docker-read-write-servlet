@@ -19,6 +19,7 @@ public class App {
         int maxAttempts = wiring.databaseProperties().databaseMaxRetryAttempts();
 
         if (databaseSetupIsHealthy(wiring)) {
+            // TODO remove this startServer static class; create a concrete Server class.
             startServer(wiring);
         } else if (attempts >= maxAttempts) {
             throw new RuntimeException("Database did not connect after " + maxAttempts + " attempts.");
@@ -27,6 +28,7 @@ public class App {
             retryDatabaseStartUp(attempts + 1);
         }
     }
+
 
     private static void retryDatabaseStartUp(int attempt) {
         int retryTime = wiring.databaseProperties().databaseTimeout();

@@ -2,7 +2,7 @@ package server.database;
 
 import oracle.jdbc.driver.OracleConnection;
 import oracle.jdbc.pool.OracleDataSource;
-import properties.DatabaseProperties;
+import utils.properties.DatabaseProperties;
 
 import java.sql.SQLException;
 

@@ -1,7 +1,7 @@
 package server.wiring;
 
-import properties.DatabaseProperties;
-import properties.ServerProperties;
+import utils.properties.DatabaseProperties;
+import utils.properties.ServerProperties;
 import server.database.Database;
 import server.database.builder.OracleDatabaseFactory;
 import server.database.repositories.StaffRepository;
@@ -9,7 +9,7 @@ import server.jetty.servlets.AddServlet;
 import server.jetty.servlets.ReadServlet;
 import server.jetty.servlets.ReadyServlet;
 import server.jetty.servlets.StatusServlet;
-import server.jetty.servlets.model.Probe;
+import server.jetty.servlets.model.probes.Probe;
 import server.jetty.servlets.model.Status;
 import utils.readers.EnvironmentVariableReader;
 import utils.readers.PropertiesReader;
@@ -29,7 +29,7 @@ public class WiringImpl implements Wiring {
     }
 
     public HttpServlet readyServlet() {
-        return new ReadyServlet(this);
+        return new ReadyServlet();
     }
 
     public HttpServlet statusServlet() {
@@ -57,6 +57,7 @@ public class WiringImpl implements Wiring {
     }
 
     public StaffRepository staffRepository() throws SQLException {
+        //TODO insert in here the database as opposed to the wiring? Is wiring needed here?
         return new StaffRepository(this);
     }
 

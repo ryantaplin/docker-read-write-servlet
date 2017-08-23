@@ -9,7 +9,7 @@ import org.apache.http.util.EntityUtils;
 import org.junit.Test;
 import org.mockito.BDDMockito;
 import server.database.OracleDatabase;
-import server.jetty.servlets.model.Probe;
+import server.jetty.servlets.model.probes.Probe;
 
 import java.io.IOException;
 
@@ -62,12 +62,12 @@ public class StatusServletTest extends AbstractAcceptanceTest {
 
     private void givenDatabaseProbeIsSuccessful() {
         BDDMockito.given(database.probe()).willReturn(new Probe("Test Database", "OK", "[user=root][url=jdbc:mysql://db/test]"));
-        wiring.setDatabase(database);
+        BDDMockito.given(wiring.database()).willReturn(database);
     }
 
     private void givenDatabaseProbeIsNotSuccessful() {
         BDDMockito.given(database.probe()).willReturn(new Probe("Test Database", "FAIL", "[user=root][url=jdbc:mysql://db/test]"));
-        wiring.setDatabase(database);
+        BDDMockito.given(wiring.database()).willReturn(database);
     }
 
     private void thenTheResponseCodeIs(int responseCode) {

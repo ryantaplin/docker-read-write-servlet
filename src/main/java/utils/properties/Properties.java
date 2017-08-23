@@ -1,4 +1,4 @@
-package properties;
+package utils.properties;
 
 import utils.readers.PropertiesReader;
 

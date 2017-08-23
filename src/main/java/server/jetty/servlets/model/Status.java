@@ -2,8 +2,8 @@ package server.jetty.servlets.model;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import server.jetty.servlets.model.probes.Probe;
 import server.wiring.Wiring;
-import utils.readers.EnvironmentVariableReader;
 
 import java.util.List;
 import java.util.stream.Stream;

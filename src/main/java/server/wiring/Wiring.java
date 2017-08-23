@@ -1,10 +1,10 @@
 package server.wiring;
 
-import properties.DatabaseProperties;
-import properties.ServerProperties;
+import utils.properties.DatabaseProperties;
+import utils.properties.ServerProperties;
 import server.database.Database;
 import server.database.repositories.StaffRepository;
-import server.jetty.servlets.model.Probe;
+import server.jetty.servlets.model.probes.Probe;
 import server.jetty.servlets.model.Status;
 import utils.readers.EnvironmentVariableReader;
 

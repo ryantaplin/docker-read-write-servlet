@@ -1,6 +1,6 @@
 package server.jetty.servlets;
 
-import server.jetty.servlets.model.Probe;
+import server.jetty.servlets.model.probes.Probe;
 import server.wiring.Wiring;
 
 import javax.servlet.ServletException;

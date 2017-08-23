@@ -35,6 +35,7 @@ public class AddServlet extends HttpServlet {
             repository.insert(order);
             repository.getAll().write(response.getWriter());
         } catch (SQLException e) {
+            //TODO handle this better? Don't blow up - log error and continue;
             e.printStackTrace();
         }
     }
