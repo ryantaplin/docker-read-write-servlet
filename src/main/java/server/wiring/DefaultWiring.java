@@ -1,6 +1,7 @@
 package server.wiring;
 
 import server.database.Database;
+import server.database.OracleConnectionFactory;
 import server.database.builder.OracleDatabaseFactory;
 import server.database.repositories.StaffRepository;
 import utils.properties.DatabaseProperties;
@@ -18,7 +19,8 @@ public class DefaultWiring {
     public static final DatabaseProperties databaseProperties = new DatabaseProperties(propertiesReader);
     public static final ServerProperties serverProperties = new ServerProperties(propertiesReader);
 
-    public static final Database database = new OracleDatabaseFactory(databaseProperties).build();
+    private static final OracleConnectionFactory oracleConnectionFactory = new OracleConnectionFactory(databaseProperties);
+    public static final Database database = new OracleDatabaseFactory(databaseProperties, oracleConnectionFactory).build();
 
     public static final StaffRepository staffRepository = new StaffRepository(database);
 }

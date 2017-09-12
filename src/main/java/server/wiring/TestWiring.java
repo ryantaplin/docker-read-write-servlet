@@ -1,6 +1,7 @@
 package server.wiring;
 
 import server.database.Database;
+import server.database.OracleConnectionFactory;
 import server.database.builder.OracleDatabaseFactory;
 import server.database.repositories.StaffRepository;
 import utils.properties.DatabaseProperties;
@@ -18,7 +19,8 @@ public class TestWiring {
     public DatabaseProperties databaseProperties = new DatabaseProperties(propertiesReader);
     public ServerProperties serverProperties = new ServerProperties(propertiesReader);
 
-    public Database database = new OracleDatabaseFactory(databaseProperties).build();
+    public OracleConnectionFactory oracleConnectionFactory = new OracleConnectionFactory(databaseProperties);
+    public Database database = new OracleDatabaseFactory(databaseProperties, oracleConnectionFactory).build();
 
     public StaffRepository staffRepository = new StaffRepository(database);
 

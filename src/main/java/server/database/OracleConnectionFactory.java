@@ -6,7 +6,7 @@ import utils.properties.DatabaseProperties;
 
 import java.sql.SQLException;
 
-public class OracleConnectionFactory {
+public class OracleConnectionFactory implements ConnectionFactory {
 
     private DatabaseProperties properties;
 

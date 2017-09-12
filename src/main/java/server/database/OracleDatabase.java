@@ -18,9 +18,8 @@ public class OracleDatabase implements Database {
     private OracleConnection connection;
     private DatabaseProperties properties;
 
-    //TODO push all of this db logic up into wiring so it is pushed through the app rather than being isolated here.
-    public OracleDatabase(DatabaseProperties properties) {
-        this.connection = new OracleConnectionFactory(properties).create();
+    public OracleDatabase(DatabaseProperties properties, ConnectionFactory oracleConnectionFactory) {
+        this.connection = oracleConnectionFactory.create();
         this.properties = properties;
 
         postConnectionScripts();
@@ -32,19 +31,6 @@ public class OracleDatabase implements Database {
             usingEdition(properties.databaseEdition());
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-    }
-
-    //TODO remove this from here - was just for testing new oracle edition implementation
-    @Deprecated
-    private void printResultsFromView() throws SQLException {
-        ResultSet resultSet = createStatement().executeQuery("SELECT * FROM staff_view");
-
-        while(resultSet.next()) {
-            System.out.println("id: " + ID.getValueAsString(resultSet) +
-                    " title: " + TITLE.getValueAsString(resultSet) +
-                    " name: " + FIRSTNAME.getValueAsString(resultSet) +
-                    " surname: " + SURNAME.getValueAsString(resultSet));
         }
     }
 

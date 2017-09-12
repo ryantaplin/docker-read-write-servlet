@@ -9,6 +9,7 @@ import org.apache.http.util.EntityUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.BDDMockito;
+import server.database.OracleConnectionFactory;
 import server.database.OracleDatabase;
 import server.jetty.servlets.model.probes.Probe;
 
@@ -25,17 +26,7 @@ public class StatusServletTest extends AbstractAcceptanceTest {
     private String responseBody;
 
     private OracleDatabase database = mock(OracleDatabase.class);
-
-    @Test
-    public void shouldReturnFailWhenOneOrMoreProbesFail() throws Exception {
-        givenDatabaseProbeIsNotSuccessful();
-        givenTheServerIsRunning();
-
-        when(whenWeHitEndpoint("status"));
-
-        thenTheResponseCodeIs(200);
-        andTheResposeBodyIs("{\"Status\":\"FAIL\",\"Environment\":\"acceptancetest\",\"probes\":[{\"Status\":\"FAIL\",\"Description\":\"[user=root][url=jdbc:mysql://db/test]\",\"Name\":\"Test Database\"}]}");
-    }
+    private OracleConnectionFactory oracleConnectionFactory = mock(OracleConnectionFactory.class);
 
     @Test
     public void shouldReturnOKWhenAllProbesAreSuccessful() throws Exception {
@@ -46,6 +37,17 @@ public class StatusServletTest extends AbstractAcceptanceTest {
 
         thenTheResponseCodeIs(200);
         andTheResposeBodyIs("{\"Status\":\"OK\",\"Environment\":\"acceptancetest\",\"probes\":[{\"Status\":\"OK\",\"Description\":\"[user=root][url=jdbc:mysql://db/test]\",\"Name\":\"Test Database\"}]}");
+    }
+
+    @Test
+    public void shouldReturnFailWhenOneOrMoreProbesFail() throws Exception {
+        givenDatabaseProbeIsNotSuccessful();
+        givenTheServerIsRunning();
+
+        when(whenWeHitEndpoint("status"));
+
+        thenTheResponseCodeIs(200);
+        andTheResposeBodyIs("{\"Status\":\"FAIL\",\"Environment\":\"acceptancetest\",\"probes\":[{\"Status\":\"FAIL\",\"Description\":\"[user=root][url=jdbc:mysql://db/test]\",\"Name\":\"Test Database\"}]}");
     }
 
     private ActionUnderTest whenWeHitEndpoint(String endpoint) throws IOException {
@@ -63,11 +65,15 @@ public class StatusServletTest extends AbstractAcceptanceTest {
 
     private void givenDatabaseProbeIsSuccessful() {
         BDDMockito.when(database.probe()).thenReturn(new Probe("Test Database", "OK", "[user=root][url=jdbc:mysql://db/test]"));
+        BDDMockito.when(oracleConnectionFactory.create()).thenReturn(null);
+        testWiring.oracleConnectionFactory = oracleConnectionFactory;
         testWiring.database = database;
     }
 
     private void givenDatabaseProbeIsNotSuccessful() {
         BDDMockito.when(database.probe()).thenReturn(new Probe("Test Database", "FAIL", "[user=root][url=jdbc:mysql://db/test]"));
+        BDDMockito.when(oracleConnectionFactory.create()).thenReturn(null);
+        testWiring.oracleConnectionFactory = oracleConnectionFactory;
         testWiring.database = database;
     }
 
