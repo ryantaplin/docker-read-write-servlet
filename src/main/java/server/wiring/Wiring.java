@@ -1,5 +1,6 @@
 package server.wiring;
 
+import org.eclipse.jetty.servlet.ServletContextHandler;
 import utils.properties.DatabaseProperties;
 import utils.properties.ServerProperties;
 import server.database.Database;
@@ -17,6 +18,10 @@ public interface Wiring {
     ServerProperties serverProperties();
 
     DatabaseProperties databaseProperties();
+
+    ServletContextHandler writeHandler();
+
+    ServletContextHandler readHandler();
 
     HttpServlet readyServlet();
 

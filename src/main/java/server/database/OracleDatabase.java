@@ -31,11 +31,7 @@ public class OracleDatabase implements Database {
             createStatement().executeQuery("ALTER SESSION SET CURRENT_SCHEMA = app_owner");
 
             usingEdition(1);
-            printResultsFromView();
-
             usingEdition(properties.databaseEdition());
-            printResultsFromView();
-
         } catch (SQLException e) {
             e.printStackTrace();
         }

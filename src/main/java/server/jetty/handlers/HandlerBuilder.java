@@ -14,21 +14,18 @@ public abstract class HandlerBuilder {
     public Wiring wiring;
     private ServletContextHandler handler;
 
-    HandlerBuilder() {
+    HandlerBuilder(Wiring wiring) {
+        this.wiring = wiring;
         this.handler = new ServletContextHandler();
         this.withStatusServlet().withReadyServlet();
     }
 
-    public void addServlet(HttpServlet httpServlet, String endpoint) {
-        handler.addServlet(new ServletHolder(httpServlet), endpoint);
-    }
-
-    public void withWiring(Wiring wiring) {
-        this.wiring = wiring;
-    }
-
     public ServletContextHandler build() {
         return handler;
+    }
+
+    void addServlet(HttpServlet httpServlet, String endpoint) {
+        handler.addServlet(new ServletHolder(httpServlet), endpoint);
     }
 
     private HandlerBuilder withReadyServlet() {

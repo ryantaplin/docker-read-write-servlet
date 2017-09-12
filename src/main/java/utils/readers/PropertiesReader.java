@@ -34,6 +34,6 @@ public class PropertiesReader {
     }
 
     private String propertiesFileName() {
-        return format("%s.utils.readers.properties", environment);
+        return format("%s.properties", environment);
     }
 }

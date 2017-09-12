@@ -1,26 +1,28 @@
 import server.wiring.Wiring;
 import server.wiring.WiringImpl;
-import setup.ServerSetup;
+import setup.ServerWrapper;
 
 import static setup.DatabaseSetup.databaseSetupIsHealthy;
-import static setup.ServerSetup.startServer;
 
 public class App {
 
     private static Wiring wiring;
+    private static ServerWrapper server;
 
     public static void main(String[] args) {
         System.out.printf("Application starting.%n%n");
+
         App.wiring = new WiringImpl();
+        App.server = new ServerWrapper(wiring);
+
         startApplication(1);
     }
 
-    public static void startApplication(int attempts) {
+    private static void startApplication(int attempts) {
         int maxAttempts = wiring.databaseProperties().databaseMaxRetryAttempts();
 
         if (databaseSetupIsHealthy(wiring)) {
-            // TODO remove this startServer static class; create a concrete Server class.
-            startServer(wiring);
+            server.startServer();
         } else if (attempts >= maxAttempts) {
             throw new RuntimeException("Database did not connect after " + maxAttempts + " attempts.");
         } else {
@@ -28,7 +30,6 @@ public class App {
             retryDatabaseStartUp(attempts + 1);
         }
     }
-
 
     private static void retryDatabaseStartUp(int attempt) {
         int retryTime = wiring.databaseProperties().databaseTimeout();

@@ -1,5 +1,8 @@
 package server.wiring;
 
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import server.jetty.handlers.ReadHandlerBuilder;
+import server.jetty.handlers.WriteHandlerBuilder;
 import utils.properties.DatabaseProperties;
 import utils.properties.ServerProperties;
 import server.database.Database;
@@ -36,6 +39,14 @@ public class WiringImpl implements Wiring {
         return new StatusServlet(this);
     }
 
+    public ServletContextHandler readHandler() {
+        return new ReadHandlerBuilder(this).withReadServlet().build();
+    }
+
+    public ServletContextHandler writeHandler() {
+        return new WriteHandlerBuilder(this).withAddServlet().build();
+    }
+
     public HttpServlet readServlet() {
         return new ReadServlet(this);
     }
@@ -49,7 +60,7 @@ public class WiringImpl implements Wiring {
     }
 
     public EnvironmentVariableReader environmentVariableReader() {
-        return new EnvironmentVariableReader(this);
+        return new EnvironmentVariableReader();
     }
 
     public Status status(List<Probe> probes) {

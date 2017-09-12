@@ -12,8 +12,6 @@ import java.io.IOException;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static setup.ServerSetup.startServer;
-
 
 public class ReadyServletTest extends AbstractAcceptanceTest {
 
@@ -22,7 +20,7 @@ public class ReadyServletTest extends AbstractAcceptanceTest {
 
     @Test
     public void shouldReturnOK() throws Exception {
-        startServer(wiring);
+        givenTheServerIsRunning();
 
         when(weHitEndpoint("ready"));
 

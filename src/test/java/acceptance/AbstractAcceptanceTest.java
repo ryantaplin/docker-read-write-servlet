@@ -11,22 +11,19 @@ import com.googlecode.yatspec.state.givenwhenthen.TestState;
 import org.junit.After;
 import org.junit.Before;
 import org.mockito.BDDMockito;
-import server.jetty.servlets.model.AppRole;
 import server.wiring.TestWiringImpl;
-import setup.ServerSetup;
+import setup.ServerWrapper;
 import utils.readers.EnvironmentVariableReader;
 
 import static java.util.Collections.singletonList;
 import static org.mockito.Mockito.mock;
-import static setup.ServerSetup.startServer;
-import static setup.ServerSetup.stopServer;
 
 public class AbstractAcceptanceTest extends TestState implements WithCustomResultListeners {
 
-    private ServerSetup server = new ServerSetup();
-    private EnvironmentVariableReader environmentVariableReader = mock(EnvironmentVariableReader.class);
+    TestWiringImpl wiring = new TestWiringImpl();
 
-    public TestWiringImpl wiring = new TestWiringImpl();
+    private ServerWrapper server = new ServerWrapper(wiring);
+    private EnvironmentVariableReader environmentVariableReader = mock(EnvironmentVariableReader.class);
 
     @Before
     public void setUp() throws Exception {
@@ -36,7 +33,7 @@ public class AbstractAcceptanceTest extends TestState implements WithCustomResul
     @After
     public void tearDown() throws Exception {
         capturedInputAndOutputs.add("Sequence Diagram", generateSequenceDiagram());
-        stopServer();
+        server.stopServer();
     }
 
     @Override
@@ -46,8 +43,8 @@ public class AbstractAcceptanceTest extends TestState implements WithCustomResul
                 .withCustomRenderer(SvgWrapper.class, new DontHighlightRenderer<>()));
     }
 
-    public void whenApplicationIsStarted() {
-        startServer(wiring);
+    public void givenTheServerIsRunning() {
+        server.startServer();
     }
 
     private SvgWrapper generateSequenceDiagram() {
@@ -55,9 +52,9 @@ public class AbstractAcceptanceTest extends TestState implements WithCustomResul
     }
 
     private void givenEnvironmentIsAcceptanceTest() {
-        BDDMockito.given(environmentVariableReader.getEnvironment()).willReturn("acceptancetest");
-        BDDMockito.given(environmentVariableReader.getAppRole()).willReturn(AppRole.READ);
+        BDDMockito.when(environmentVariableReader.getEnvironment()).thenReturn("acceptancetest");
+        BDDMockito.when(environmentVariableReader.getAppRole()).thenReturn("READ");
 
-        BDDMockito.given(wiring.environmentVariableReader()).willReturn(environmentVariableReader);
+//        BDDMockito.when(wiring.environmentVariableReader()).thenReturn(environmentVariableReader);
     }
 }

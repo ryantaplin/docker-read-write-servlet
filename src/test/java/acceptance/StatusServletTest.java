@@ -46,7 +46,7 @@ public class StatusServletTest extends AbstractAcceptanceTest {
     }
 
     private ActionUnderTest whenWeHitEndpoint(String endpoint) throws IOException {
-        whenApplicationIsStarted();
+        givenTheServerIsRunning();
 
         String url = "http://localhost:" + wiring.serverProperties().serverPort() + "/" + endpoint;
         return (interestingGivens, capturedInputAndOutputs) -> whenWeHitEndpoint(capturedInputAndOutputs, getRequestTo(url));
@@ -61,13 +61,13 @@ public class StatusServletTest extends AbstractAcceptanceTest {
     }
 
     private void givenDatabaseProbeIsSuccessful() {
-        BDDMockito.given(database.probe()).willReturn(new Probe("Test Database", "OK", "[user=root][url=jdbc:mysql://db/test]"));
-        BDDMockito.given(wiring.database()).willReturn(database);
+        BDDMockito.when(database.probe()).thenReturn(new Probe("Test Database", "OK", "[user=root][url=jdbc:mysql://db/test]"));
+        wiring.setDatabase(database);
     }
 
     private void givenDatabaseProbeIsNotSuccessful() {
-        BDDMockito.given(database.probe()).willReturn(new Probe("Test Database", "FAIL", "[user=root][url=jdbc:mysql://db/test]"));
-        BDDMockito.given(wiring.database()).willReturn(database);
+        BDDMockito.when(database.probe()).thenReturn(new Probe("Test Database", "FAIL", "[user=root][url=jdbc:mysql://db/test]"));
+        wiring.setDatabase(database);
     }
 
     private void thenTheResponseCodeIs(int responseCode) {
