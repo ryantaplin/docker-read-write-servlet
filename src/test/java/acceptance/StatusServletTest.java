@@ -6,6 +6,7 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.BDDMockito;
 import server.database.OracleDatabase;
@@ -26,18 +27,9 @@ public class StatusServletTest extends AbstractAcceptanceTest {
     private OracleDatabase database = mock(OracleDatabase.class);
 
     @Test
-    public void shouldReturnOKWhenAllProbesAreSuccessful() throws Exception {
-        givenDatabaseProbeIsSuccessful();
-
-        when(whenWeHitEndpoint("status"));
-
-        thenTheResponseCodeIs(200);
-        andTheResposeBodyIs("{\"Status\":\"OK\",\"Environment\":\"acceptancetest\",\"probes\":[{\"Status\":\"OK\",\"Description\":\"[user=root][url=jdbc:mysql://db/test]\",\"Name\":\"Test Database\"}]}");
-    }
-
-    @Test
     public void shouldReturnFailWhenOneOrMoreProbesFail() throws Exception {
         givenDatabaseProbeIsNotSuccessful();
+        givenTheServerIsRunning();
 
         when(whenWeHitEndpoint("status"));
 
@@ -45,9 +37,18 @@ public class StatusServletTest extends AbstractAcceptanceTest {
         andTheResposeBodyIs("{\"Status\":\"FAIL\",\"Environment\":\"acceptancetest\",\"probes\":[{\"Status\":\"FAIL\",\"Description\":\"[user=root][url=jdbc:mysql://db/test]\",\"Name\":\"Test Database\"}]}");
     }
 
-    private ActionUnderTest whenWeHitEndpoint(String endpoint) throws IOException {
+    @Test
+    public void shouldReturnOKWhenAllProbesAreSuccessful() throws Exception {
+        givenDatabaseProbeIsSuccessful();
         givenTheServerIsRunning();
 
+        when(whenWeHitEndpoint("status"));
+
+        thenTheResponseCodeIs(200);
+        andTheResposeBodyIs("{\"Status\":\"OK\",\"Environment\":\"acceptancetest\",\"probes\":[{\"Status\":\"OK\",\"Description\":\"[user=root][url=jdbc:mysql://db/test]\",\"Name\":\"Test Database\"}]}");
+    }
+
+    private ActionUnderTest whenWeHitEndpoint(String endpoint) throws IOException {
         String url = "http://localhost:" + wiring.serverProperties().serverPort() + "/" + endpoint;
         return (interestingGivens, capturedInputAndOutputs) -> whenWeHitEndpoint(capturedInputAndOutputs, getRequestTo(url));
     }
@@ -62,12 +63,12 @@ public class StatusServletTest extends AbstractAcceptanceTest {
 
     private void givenDatabaseProbeIsSuccessful() {
         BDDMockito.when(database.probe()).thenReturn(new Probe("Test Database", "OK", "[user=root][url=jdbc:mysql://db/test]"));
-        wiring.setDatabase(database);
+        testWiring.database = database;
     }
 
     private void givenDatabaseProbeIsNotSuccessful() {
         BDDMockito.when(database.probe()).thenReturn(new Probe("Test Database", "FAIL", "[user=root][url=jdbc:mysql://db/test]"));
-        wiring.setDatabase(database);
+        testWiring.database = database;
     }
 
     private void thenTheResponseCodeIs(int responseCode) {

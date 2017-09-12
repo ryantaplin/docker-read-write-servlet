@@ -1,15 +1,15 @@
 package server.database.builder;
 
 import server.database.OracleDatabase;
-import server.wiring.Wiring;
+import utils.properties.DatabaseProperties;
 
 public class OracleDatabaseFactory extends AbstractDatabaseBuilder {
 
-    public OracleDatabaseFactory(Wiring wiring) {
-        super(wiring);
+    public OracleDatabaseFactory(DatabaseProperties databaseProperties) {
+        super(databaseProperties);
     }
 
     public OracleDatabase build() {
-        return new OracleDatabase(wiring.databaseProperties());
+        return new OracleDatabase(databaseProperties);
     }
 }

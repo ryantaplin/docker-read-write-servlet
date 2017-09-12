@@ -2,6 +2,8 @@ package server.jetty.handlers;
 
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import server.jetty.servlets.ReadyServlet;
+import server.jetty.servlets.StatusServlet;
 import server.wiring.Wiring;
 
 import javax.servlet.http.HttpServlet;
@@ -29,12 +31,12 @@ public abstract class HandlerBuilder {
     }
 
     private HandlerBuilder withReadyServlet() {
-        addServlet(wiring.readyServlet(), READY_ENDPOINT);
+        addServlet(new ReadyServlet(), READY_ENDPOINT);
         return this;
     }
 
     private HandlerBuilder withStatusServlet() {
-        addServlet(wiring.statusServlet(), STATUS_ENDPOINT);
+        addServlet(new StatusServlet(wiring.database(), wiring.environment()), STATUS_ENDPOINT);
         return this;
     }
 }

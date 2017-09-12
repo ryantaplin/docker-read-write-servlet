@@ -2,18 +2,17 @@ package setup;
 
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import server.jetty.JettyServer;
+import server.jetty.handlers.ReadHandlerBuilder;
+import server.jetty.handlers.WriteHandlerBuilder;
 import server.wiring.Wiring;
-import utils.readers.EnvironmentVariableReader;
 
 public class ServerWrapper {
 
     private JettyServer server;
     private Wiring wiring;
-    private EnvironmentVariableReader environmentVariableReader;
 
     public ServerWrapper(Wiring wiring) {
         this.wiring = wiring;
-        this.environmentVariableReader = wiring.environmentVariableReader();
         createNewServer(wiring);
     }
 
@@ -21,7 +20,7 @@ public class ServerWrapper {
         server = new JettyServer(wiring);
         server.withContext(getHandlerForApp());
 
-        System.out.println("Server has successfully loaded under " + environmentVariableReader.getEnvironment() + " environment.");
+        System.out.println("Server has successfully loaded under \'" + wiring.environment() + "\' environment.");
     }
 
     public void startServer() { server.start(); }
@@ -31,13 +30,11 @@ public class ServerWrapper {
     }
 
     private ServletContextHandler getHandlerForApp() {
-        String appRole = wiring.environmentVariableReader().getAppRole();
-
-        switch (appRole) {
+        switch (wiring.appRole()) {
             case "READ":
-                return wiring.readHandler();
+                return new ReadHandlerBuilder(wiring).withReadServlet().build();
             case "WRITE":
-                return wiring.writeHandler();
+                return new WriteHandlerBuilder(wiring).withAddServlet().build();
             default:
                 throw new IllegalStateException("No valid role for application.");
         }

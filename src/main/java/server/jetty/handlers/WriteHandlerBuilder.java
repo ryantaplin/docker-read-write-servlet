@@ -1,6 +1,7 @@
 package server.jetty.handlers;
 
 
+import server.jetty.servlets.AddServlet;
 import server.wiring.Wiring;
 
 import static server.wiring.endpoints.WriteEndpoints.*;
@@ -12,7 +13,7 @@ public class WriteHandlerBuilder extends HandlerBuilder {
     }
 
     public WriteHandlerBuilder withAddServlet() {
-        addServlet(wiring.writeServlet(), WRITE_ENDPOINT);
+        addServlet(new AddServlet(wiring.databaseProperties(), wiring.staffRepository()), WRITE_ENDPOINT);
         return this;
     }
 }

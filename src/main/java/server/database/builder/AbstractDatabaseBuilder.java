@@ -1,13 +1,13 @@
 package server.database.builder;
 
-import server.wiring.Wiring;
+import utils.properties.DatabaseProperties;
 
 public abstract class AbstractDatabaseBuilder implements DatabaseBuilder {
 
-    public Wiring wiring;
+    public DatabaseProperties databaseProperties;
 
-    public AbstractDatabaseBuilder(Wiring wiring) {
-        this.wiring = wiring;
+    public AbstractDatabaseBuilder(DatabaseProperties databaseProperties) {
+        this.databaseProperties = databaseProperties;
     }
 
 }

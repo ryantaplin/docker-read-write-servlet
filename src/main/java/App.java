@@ -2,6 +2,7 @@ import server.wiring.Wiring;
 import server.wiring.WiringImpl;
 import setup.ServerWrapper;
 
+import static server.wiring.DefaultWiring.*;
 import static setup.DatabaseSetup.databaseSetupIsHealthy;
 
 public class App {
@@ -12,9 +13,14 @@ public class App {
     public static void main(String[] args) {
         System.out.printf("Application starting.%n%n");
 
-        App.wiring = new WiringImpl();
-        App.server = new ServerWrapper(wiring);
+        App.wiring = new WiringImpl(environment,
+                                    appRole,
+                                    serverProperties,
+                                    databaseProperties,
+                                    database,
+                                    staffRepository);
 
+        App.server = new ServerWrapper(wiring);
         startApplication(1);
     }
 

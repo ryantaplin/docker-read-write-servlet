@@ -4,7 +4,6 @@ import server.database.Database;
 import server.database.repositories.model.Staff;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import server.wiring.Wiring;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.sql.ResultSet;
@@ -15,8 +14,8 @@ public class StaffRepository implements Repository {
     private String TABLE_NAME = "staff";
     private Database database;
 
-    public StaffRepository(Wiring wiring) throws SQLException {
-        this.database = wiring.database();
+    public StaffRepository(Database database) {
+        this.database = database;
     }
 
     public JSONArray getAll() throws SQLException {

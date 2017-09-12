@@ -3,7 +3,6 @@ package server.jetty.servlets.model;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import server.jetty.servlets.model.probes.Probe;
-import server.wiring.Wiring;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -11,11 +10,11 @@ import java.util.stream.Stream;
 public class Status {
 
     private List<Probe> probes;
-    private Wiring wiring;
+    private String environment;
 
-    public Status(List<Probe> probes, Wiring wiring) {
+    public Status(List<Probe> probes, String environment) {
         this.probes = probes;
-        this.wiring = wiring;
+        this.environment = environment;
     }
 
     private String status() {
@@ -30,7 +29,7 @@ public class Status {
         return new JSONObject()
                 .put("Status", status())
                 .put("probes", jsonArray)
-                .put("Environment", wiring.environmentVariableReader().getEnvironment());
+                .put("Environment", environment);
     }
 
 }

@@ -1,8 +1,6 @@
 package server.jetty.servlets;
 
 import server.database.repositories.StaffRepository;
-import server.database.repositories.model.Staff;
-import server.wiring.Wiring;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,17 +10,16 @@ import java.sql.SQLException;
 
 public class ReadServlet extends HttpServlet {
 
-    private Wiring wiring;
+    private StaffRepository staffRepository;
 
-    public ReadServlet(Wiring wiring) {
-        this.wiring = wiring;
+    public ReadServlet(StaffRepository staffRepository) {
+        this.staffRepository = staffRepository;
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)  {
         try {
             response.setContentType("application/json");
-            StaffRepository repository = wiring.staffRepository();
-            repository.getAll().write(response.getWriter());
+            staffRepository.getAll().write(response.getWriter());
         } catch (SQLException | IOException e) {
             //TODO handle this better? Don't blow up - log error and continue;
             e.printStackTrace();

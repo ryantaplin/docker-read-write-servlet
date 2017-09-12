@@ -1,7 +1,8 @@
 package server.jetty.servlets;
 
+import server.database.Database;
+import server.jetty.servlets.model.Status;
 import server.jetty.servlets.model.probes.Probe;
-import server.wiring.Wiring;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,15 +15,18 @@ import static java.util.Arrays.asList;
 
 public class StatusServlet extends HttpServlet {
 
-    private Wiring wiring;
+    private Database database;
+    private String environment;
 
-    public StatusServlet(Wiring wiring) {
-        this.wiring = wiring;
+    public StatusServlet(Database database, String environment) {
+        this.database = database;
+        this.environment = environment;
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
-        List<Probe> probes = asList(wiring.database().probe());
-        wiring.status(probes).json().write(response.getWriter());
+        List<Probe> probes = asList(database.probe());
+        new Status(probes, environment).json().write(response.getWriter());
     }
+
 }

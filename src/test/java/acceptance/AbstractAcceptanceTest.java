@@ -10,24 +10,27 @@ import com.googlecode.yatspec.rendering.html.HtmlResultRenderer;
 import com.googlecode.yatspec.state.givenwhenthen.TestState;
 import org.junit.After;
 import org.junit.Before;
-import org.mockito.BDDMockito;
-import server.wiring.TestWiringImpl;
+import server.wiring.TestWiring;
+import server.wiring.WiringImpl;
 import setup.ServerWrapper;
-import utils.readers.EnvironmentVariableReader;
 
 import static java.util.Collections.singletonList;
-import static org.mockito.Mockito.mock;
 
 public class AbstractAcceptanceTest extends TestState implements WithCustomResultListeners {
 
-    TestWiringImpl wiring = new TestWiringImpl();
-
-    private ServerWrapper server = new ServerWrapper(wiring);
-    private EnvironmentVariableReader environmentVariableReader = mock(EnvironmentVariableReader.class);
+    public TestWiring testWiring;
+    public WiringImpl wiring;
+    private ServerWrapper server;
 
     @Before
     public void setUp() throws Exception {
-        givenEnvironmentIsAcceptanceTest();
+        createTestWiring();
+    }
+
+    private void createTestWiring() {
+        testWiring = new TestWiring();
+        testWiring.environment = "acceptancetest";
+        testWiring.appRole = "READ";
     }
 
     @After
@@ -44,17 +47,19 @@ public class AbstractAcceptanceTest extends TestState implements WithCustomResul
     }
 
     public void givenTheServerIsRunning() {
+        wiring = new WiringImpl(
+                testWiring.environment,
+                testWiring.appRole,
+                testWiring.serverProperties,
+                testWiring.databaseProperties,
+                testWiring.database,
+                testWiring.staffRepository);
+
+        server = new ServerWrapper(wiring);
         server.startServer();
     }
 
     private SvgWrapper generateSequenceDiagram() {
         return new SequenceDiagramGenerator().generateSequenceDiagram(new ByNamingConventionMessageProducer().messages(capturedInputAndOutputs));
-    }
-
-    private void givenEnvironmentIsAcceptanceTest() {
-        BDDMockito.when(environmentVariableReader.getEnvironment()).thenReturn("acceptancetest");
-        BDDMockito.when(environmentVariableReader.getAppRole()).thenReturn("READ");
-
-//        BDDMockito.when(wiring.environmentVariableReader()).thenReturn(environmentVariableReader);
     }
 }
