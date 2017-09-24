@@ -22,14 +22,14 @@ public class ReadyServletTest extends AbstractAcceptanceTest {
     public void shouldReturnOK() throws Exception {
         givenTheServerIsRunning();
 
-        when(weHitEndpoint("ready"));
+        when(weHitTheReadyEndpoint());
 
         thenTheResponseCodeIs(200);
         andTheResposeBodyIs("OK");
     }
 
-    private ActionUnderTest weHitEndpoint(String endpoint) throws IOException {
-        String url = "http://localhost:" + wiring.serverProperties().serverPort() + "/" + endpoint;
+    private ActionUnderTest weHitTheReadyEndpoint() throws IOException {
+        String url = "http://localhost:" + wiring.serverProperties().serverPort() + "/ready" ;
         return (interestingGivens, capturedInputAndOutputs) -> whenWeHitEndpoint(capturedInputAndOutputs, getRequestTo(url));
     }
 

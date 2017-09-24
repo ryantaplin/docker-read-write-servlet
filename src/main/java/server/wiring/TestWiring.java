@@ -1,26 +1,21 @@
 package server.wiring;
 
-import server.database.Database;
-import server.database.OracleConnectionFactory;
-import server.database.builder.OracleDatabaseFactory;
+import server.database.TestDatabase;
 import server.database.repositories.StaffRepository;
 import utils.properties.DatabaseProperties;
 import utils.properties.ServerProperties;
-import utils.readers.EnvironmentVariableReader;
 import utils.readers.PropertiesReader;
 
 public class TestWiring {
 
-    private EnvironmentVariableReader envReader = new EnvironmentVariableReader();
-    public String environment = envReader.getEnvironment();
-    public String appRole = envReader.getAppRole();
+    public String environment = "acceptancetest";
+    public String appRole = "READ";
 
-    private PropertiesReader propertiesReader = new PropertiesReader(envReader.getEnvironment());
+    private PropertiesReader propertiesReader = new PropertiesReader(environment);
     public DatabaseProperties databaseProperties = new DatabaseProperties(propertiesReader);
     public ServerProperties serverProperties = new ServerProperties(propertiesReader);
 
-    public OracleConnectionFactory oracleConnectionFactory = new OracleConnectionFactory(databaseProperties);
-    public Database database = new OracleDatabaseFactory(databaseProperties, oracleConnectionFactory).build();
+    public TestDatabase database = new TestDatabase(databaseProperties);
 
     public StaffRepository staffRepository = new StaffRepository(database);
 

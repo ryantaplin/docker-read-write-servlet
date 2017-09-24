@@ -18,20 +18,10 @@ import static java.util.Collections.singletonList;
 
 public class AbstractAcceptanceTest extends TestState implements WithCustomResultListeners {
 
-    public TestWiring testWiring;
-    public WiringImpl wiring;
     private ServerWrapper server;
 
-    @Before
-    public void setUp() throws Exception {
-        createTestWiring();
-    }
-
-    private void createTestWiring() {
-        testWiring = new TestWiring();
-        testWiring.environment = "acceptancetest";
-        testWiring.appRole = "READ";
-    }
+    public TestWiring testWiring = new TestWiring();
+    public WiringImpl wiring;
 
     @After
     public void tearDown() throws Exception {
