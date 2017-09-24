@@ -1,6 +1,7 @@
 package server.database;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 import server.jetty.servlets.model.probes.Probe;
 import server.jetty.servlets.model.probes.TestProbe;
 import utils.properties.DatabaseProperties;
@@ -13,16 +14,16 @@ public class TestDatabase implements Database {
     private DatabaseProperties properties;
 
     private String status = "OK";
+    private JSONArray array = new JSONArray();
 
     public TestDatabase(DatabaseProperties properties) {
         this.properties = properties;
     }
 
     public JSONArray query(String sql) throws SQLException {
-        return null;
+        return array;
     }
 
-    //TODO: Implement this when necessary, store and retrieve value as a collection in this stub.
     public void update(String sql) throws SQLException {
         // add to an array list.
     }
@@ -44,5 +45,4 @@ public class TestDatabase implements Database {
     public void setStatus(String status) {
         this.status = status;
     }
-
 }

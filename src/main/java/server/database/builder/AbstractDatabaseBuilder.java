@@ -9,5 +9,4 @@ public abstract class AbstractDatabaseBuilder implements DatabaseBuilder {
     public AbstractDatabaseBuilder(DatabaseProperties databaseProperties) {
         this.databaseProperties = databaseProperties;
     }
-
 }

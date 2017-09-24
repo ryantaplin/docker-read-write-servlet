@@ -35,9 +35,8 @@ public class AddServlet extends HttpServlet {
             StaffRepository repository = staffRepository;
             repository.insert(order);
             repository.getAll().write(response.getWriter());
-        } catch (SQLException e) {
-            //TODO handle this better? Don't blow up - log error and continue;
-            e.printStackTrace();
+        } catch (SQLException error) {
+            System.out.println("There was a problem inserting, reading or displaying data from the add servlet: \n"  +  error);
         }
     }
 }

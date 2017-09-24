@@ -20,9 +20,8 @@ public class ReadServlet extends HttpServlet {
         try {
             response.setContentType("application/json");
             staffRepository.getAll().write(response.getWriter());
-        } catch (SQLException | IOException e) {
-            //TODO handle this better? Don't blow up - log error and continue;
-            e.printStackTrace();
+        } catch (SQLException | IOException error) {
+            System.out.println("There was a problem reading and displaying data from the read servlet: \n"  +  error);
         }
     }
 }

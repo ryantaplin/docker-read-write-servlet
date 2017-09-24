@@ -3,10 +3,8 @@ package server.database.repositories;
 import server.database.Database;
 import server.database.repositories.model.Staff;
 import org.json.JSONArray;
-import org.json.JSONObject;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class StaffRepository implements Repository {

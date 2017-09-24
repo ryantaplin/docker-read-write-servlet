@@ -9,7 +9,6 @@ public class EnvironmentVariableReader {
         return environment != null ? environment.toLowerCase() : "localhost";
     }
 
-    //TODO make default value a configurable property?
     public String getAppRole() {
         String appRole = getEnvironmentVariable("ROLE");
         return appRole == null ? "READ" : appRole.toUpperCase();
