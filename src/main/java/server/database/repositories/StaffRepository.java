@@ -19,11 +19,11 @@ public class StaffRepository implements Repository {
     }
 
     public JSONArray getAll() throws SQLException {
-        return convertResultsToJson(database.query(String.format("SELECT * FROM %s", TABLE_NAME)));
+        return database.query(String.format("SELECT * FROM %s", TABLE_NAME));
     }
 
     public JSONArray find(StaffColumn column, String criteria) throws SQLException {
-        return convertResultsToJson(database.query(String.format("SELECT * FROM %s WHERE %s=%s", TABLE_NAME, column, criteria)));
+        return database.query(String.format("SELECT * FROM %s WHERE %s=%s", TABLE_NAME, column, criteria));
     }
 
     public void insert(Staff order) throws SQLException {
@@ -35,17 +35,5 @@ public class StaffRepository implements Repository {
 
     public void removeById(int id) {
         throw new NotImplementedException();
-    }
-
-    public JSONArray convertResultsToJson(ResultSet result) throws SQLException {
-        JSONArray array = new JSONArray();
-        while (result.next()) {
-            JSONObject obj = new JSONObject();
-            obj.put("title", result.getString(StaffColumn.TITLE.toString()));
-            obj.put("First Name", result.getString(StaffColumn.FIRSTNAME.toString()));
-            obj.put("Surname", result.getString(StaffColumn.SURNAME.toString()));
-            array.put(obj);
-        }
-        return array;
     }
 }

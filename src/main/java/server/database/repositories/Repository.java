@@ -10,7 +10,6 @@ public interface Repository {
 
     JSONArray getAll() throws SQLException;
     JSONArray find(StaffColumn column, String criteria) throws SQLException;
-    JSONArray convertResultsToJson(ResultSet result) throws SQLException;
 
     void insert(Staff order) throws SQLException;
     void removeById(int id);

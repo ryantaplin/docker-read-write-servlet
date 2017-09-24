@@ -1,11 +1,11 @@
 package server.database;
 
+import org.json.JSONArray;
 import server.jetty.servlets.model.probes.Probe;
 import server.jetty.servlets.model.probes.TestProbe;
 import utils.properties.DatabaseProperties;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class TestDatabase implements Database {
@@ -18,8 +18,7 @@ public class TestDatabase implements Database {
         this.properties = properties;
     }
 
-    //TODO: Convert this to return JSON as opposed to result set.
-    public ResultSet query(String sql) throws SQLException {
+    public JSONArray query(String sql) throws SQLException {
         return null;
     }
 
