@@ -18,8 +18,8 @@ public class OracleDatabase implements Database {
     private OracleConnection connection;
     private DatabaseProperties properties;
 
-    public OracleDatabase(DatabaseProperties properties, ConnectionFactory oracleConnectionFactory) {
-        this.connection = oracleConnectionFactory.create();
+    public OracleDatabase(DatabaseProperties properties) {
+        this.connection = new OracleConnectionFactory(properties).create();
         this.properties = properties;
 
         postConnectionScripts();
@@ -52,11 +52,10 @@ public class OracleDatabase implements Database {
                 String.format("[user=%s][url=%s]", properties.databaseUsername(), properties.databaseURL()));
     }
 
-    // TODO fix this check some how. No longer supporting .isValid atm (something to do with JDBC vs JDK version?)
     public String status() {
         try {
-            return connection != null ? "OK" : "FAIL";
-            // return connection.isValid(utils.readers.properties.databaseTimeout()) ? "OK" : "FAIL";
+             //return connection != null ? "OK" : "FAIL";
+             return connection.isValid(properties.databaseTimeout()) ? "OK" : "FAIL";
         } catch (Exception e) {
             //Do nothing
         }
@@ -64,7 +63,7 @@ public class OracleDatabase implements Database {
     }
 
     private Statement createStatement() throws SQLException {
-        return this.connection.createStatement(); //Default ResultSet => TYPE_FORWARD_ONLY (Read More)
+        return this.connection.createStatement();
     }
 
     private void usingEdition(int editionNum) throws SQLException {
